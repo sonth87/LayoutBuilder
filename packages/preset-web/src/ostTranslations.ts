@@ -9,6 +9,7 @@ export const ostTrans: OstTranslations = {
   cmdBtnViewCompLabel: "View components",
   cmdBtnImportLabel: "Import template",
   cmdBtnExportLabel: "Export template",
+  cmdBtnExportJsonLabel: "Export json",
   cmdBtnUndoLabel: "Undo",
   cmdBtnRedoLabel: "Redo",
   openStyleManager: "Open Style Manager",

@@ -3,12 +3,14 @@ import PluginOptions from "./pluginOptions";
 import { cmdDeviceDesktop, cmdDeviceMobile, cmdDeviceTablet } from "./consts";
 import openExportCommand from "./openExportCommand";
 import openImportCommand from "./openImportCommand";
+import openExportJson from "./openExportJson";
 
 export default async (editor: Editor, opts: Required<PluginOptions>) => {
   const { Commands } = editor;
 
   openImportCommand(editor, opts);
   openExportCommand(editor, opts);
+  openExportJson(editor, opts);
 
   Commands.add(cmdDeviceDesktop, {
     run: (ed) => ed.setDevice("Desktop"),

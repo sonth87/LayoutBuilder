@@ -4,7 +4,7 @@ import { cmdDeviceDesktop, cmdDeviceMobile, cmdDeviceTablet } from "./consts";
 
 export default (editor: Editor, opts: Required<PluginOptions>) => {
   const { Panels } = editor;
-  const { cmdOpenImport, cmdOpenExport } = opts;
+  const { cmdOpenImport, cmdOpenExport, cmdOpenExportJson } = opts;
   const openStyleManager = "open-sm";
   const openTraits = "open-tm";
   const openLayers = "open-layers";
@@ -81,6 +81,17 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
           command: cmdOpenExport,
           attributes: {
             "data-tooltip": opts.t9n.cmdBtnExportLabel,
+            "data-tooltip-pos": "bottom",
+          },
+          label: `<svg ${iconStyle} viewBox="0 0 24 24">
+              <path fill="currentColor" d="M12.89,3L14.85,3.4L11.11,21L9.15,20.6L12.89,3M19.59,12L16,8.41V5.58L22.42,12L16,18.41V15.58L19.59,12M1.58,12L8,5.58V8.41L4.41,12L8,15.58V18.41L1.58,12Z" />
+          </svg>`,
+        },
+        {
+          id: cmdOpenExportJson,
+          command: cmdOpenExportJson,
+          attributes: {
+            "data-tooltip": opts.t9n.cmdBtnExportJsonLabel,
             "data-tooltip-pos": "bottom",
           },
           label: `<svg ${iconStyle} viewBox="0 0 24 24">

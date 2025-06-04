@@ -18,6 +18,7 @@ export default interface PluginOptions {
    * @default 'gjs-open-export-template'
    */
   cmdOpenExport?: string;
+  cmdOpenExportJson?: string;
 
   /**
    * Import command id.

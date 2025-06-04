@@ -8,7 +8,9 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "watch": "concurrently \"npm run dev\" \"npm run watch:preset\"",
+    "watch:preset": "cd ../../packages/preset-web && npm run watch"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -70,6 +72,7 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.5.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
+    "concurrently": "^9.1.2",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.9.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
@@ -81,7 +84,7 @@
     "tailwindcss": "^3.4.11",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
-    "preset-web": "1.0.0",
+    "preset-web": "*",
     "vite": "^5.4.1"
   },
   "eslintConfig": {

@@ -24,6 +24,9 @@
     "build:js": "grapesjs-cli build --patch=false",
     "build:css": "sass --no-source-map --style=compressed src/style/main.scss:dist/preset-web.css",
     "build:css:dev": "sass --source-map --style=expanded src/style/main.scss:dist/preset-web.css",
+    "watch": "npm run watch:js & npm run watch:css",
+    "watch:js": "npx webpack --mode=development --watch",
+    "watch:css": "sass --watch --source-map --style=expanded src/style/main.scss:dist/preset-web.css",
     "test": "jest --passWithNoTests",
     "release": "npm run build && np"
   },

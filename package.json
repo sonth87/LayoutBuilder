@@ -6,6 +6,7 @@
     "build:app": "turbo run build --filter=layout-builder",
     "build:packages": "turbo run build --filter=./packages/*",
     "dev": "turbo run dev",
+    "watch": "turbo run watch",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"

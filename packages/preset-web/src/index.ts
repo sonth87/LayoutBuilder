@@ -246,4 +246,4 @@ const plugin: Plugin<PluginOptions> = async (
   });
 };
 
-export { plugin as default };
+export default plugin;

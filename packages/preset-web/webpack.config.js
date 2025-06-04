@@ -15,7 +15,7 @@ module.exports = (env = {}) => {
       filename: "[name].min.js",
       library: {
         type: "umd", // Universal Module Definition format
-        name: "presetWeb",
+        name: "preset-web", // This should match the name in your plugin
         export: "default" // Explicitly set default export
       },
       globalObject: 'this' // Ensures compatibility in both browser and Node.js

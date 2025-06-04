@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Test GrapesJS Ostendis Editor</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://dummyimage.com/96/144c7b/fff.png&text=GJS"
+      sizes="96x96"
+    />
+    <!-- GrapeJs Style -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/grapesjs@0.22.7/dist/css/grapes.min.css"
+    />
+    <!-- Ostendis Preset Plugin Style -->
+    <!-- <link rel="stylesheet" href="dist/grapesjs-preset-ostendis-adv.css" /> -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      /**/
+      .gjs-ost-toolbar {
+        display: none;
+        position: absolute;
+        background-color: var(--gjs-color-blue);
+        white-space: nowrap;
+        color: #fff;
+        z-index: 11;
+        bottom: -26px;
+        right: 0;
+      }
+
+      .gjs-ost-toolbar.show {
+        display: block;
+        pointer-events: all;
+      }
+
+      .gjs-ost-toolbar .gjs-ost-toolbar-item {
+        cursor: pointer;
+        display: inline-block;
+        width: 26px;
+        height: 26px;
+        padding: 5px;
+      }
+
+      .gjs-ost-toolbar .gjs-ost-toolbar-item.disable {
+        color: rgba(255, 255, 255, 0.5);
+        cursor: not-allowed;
+      }
+    </style>
+    <!-- Ostendis Preset Plugin JavaScript -->
+    <!-- <script src="dist/grapesjs-preset-ostendis-adv.min.js"></script> -->
+
+    <!-- GrapesJS JavaScript -->
+    <script src="https://unpkg.com/grapesjs@0.22.7/dist/grapes.min.js"></script>
+  </head>
+  <style>
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+    }
+  </style>
+
+  <body>
+    <div id="gjs" class="advanced" style="height: 0px; overflow: hidden">
+      <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather&family=Open+Sans+Condensed&family=Open+Sans&family=PT+Serif&family=Roboto+Slab&family=Roboto&family=Noto+Sans+JP&display=swap"
+        rel="stylesheet"
+      />
+
+      <table class="main-body">
+        <tr class="row">
+          <td class="main-body-cell">
+            <table class="container">
+              <tr>
+                <td class="container-cell">
+                  <table class="table100 c1790">
+                    <tr>
+                      <td class="top-cell" id="c1793">
+                        <u class="browser-link" id="c307">View in browser </u>
+                      </td>
+                    </tr>
+                  </table>
+                  <table class="c1766">
+                    <tr>
+                      <td class="cell c1769">
+                        <img
+                          class="c926"
+                          src="https://dummyimage.com/70x70/144c7b/fff&text=GrapesJS"
+                          alt="GrapesJS."
+                          data-ost-type="logoPicURL"
+                        />
+                      </td>
+                      <td class="cell c1776">
+                        <div class="c1144">
+                          <h1 style="font-size: 18px; font-weight: 400">
+                            GrapesJS Newsletter Builder
+                          </h1>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                  <table class="card">
+                    <tr>
+                      <td class="card-cell">
+                        <img
+                          class="c1271"
+                          src="https://dummyimage.com/520x260/144c7b/fff&text=Test"
+                          alt="Big image here"
+                          data-ost-type="headerPic1URL"
+                        />
+                        <table class="table100 c1357">
+                          <tr>
+                            <td class="card-content">
+                              <h2
+                                class="card-title"
+                                data-ost-type="introductionHeading"
+                                data-gjs-type="text"
+                                id="d4gfi"
+                              >
+                                Build your newsletters faster than ever (is
+                                Type: Text)
+                              </h2>
+                              <p class="card-text" data-ost-type="introduction">
+                                Import, build, test and export responsive
+                                newsletter templates faster than ever using the
+                                GrapesJS Newsletter Builder.
+                              </p>
+                              <table class="c1542">
+                                <tr>
+                                  <td class="card-footer" id="c1545">
+                                    <a
+                                      class="button"
+                                      href="https://github.com/artf/grapesjs"
+                                      >Free and Open Source</a
+                                    >
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                  <div
+                    class="scale"
+                    data-percent="33"
+                    data-fcolor="mediumseagreen"
+                    data-bgcolor="tomato"
+                    style="
+                      box-sizing: border-box;
+                      margin: 15px;
+                      padding: 0;
+                      height: 20px;
+                      max-width: 100%;
+                      border: none;
+                      background: linear-gradient(
+                        to right,
+                        mediumseagreen 33%,
+                        tomato 33%
+                      );
+                    "
+                  ></div>
+                  <ul class="ulist fa-ul" data-gjs-type="ulist">
+                    <li style="text-align: left" data-gjs-type="ulistitem">
+                      <span class="fa-li" style="left: -2em; width: 2em">
+                        <i
+                          class="fa-solid fa-envelope"
+                          data-gjs-type="icon"
+                          style="
+                            font-size: 1em;
+                            line-height: inherit;
+                            display: block;
+                          "
+                        ></i>
+                      </span>
+                      <p style="margin: 0; padding: 0; text-align: left">
+                        Text 1
+                      </p>
+                    </li>
+                    <li style="text-align: left" data-gjs-type="ulistitem">
+                      <span class="fa-li" style="left: -2em; width: 2em">
+                        <i
+                          class="fa-solid fa-cog"
+                          data-gjs-type="icon"
+                          style="
+                            font-size: 1em;
+                            line-height: inherit;
+                            display: block;
+                          "
+                        ></i>
+                      </span>
+                      <p style="margin: 0; padding: 0; text-align: left">
+                        Text 2 kein type ulistitem
+                      </p>
+                    </li>
+                    <li style="text-align: left" data-gjs-type="ulistitem">
+                      <span class="fa-li" style="left: -2em; width: 2em">
+                        <i
+                          class="fa-solid fa-ghost fa-rotate-by"
+                          style="
+                            font-size: 1em;
+                            line-height: inherit;
+                            display: block;
+                            --fa-rotate-angle: 5deg;
+                          "
+                        ></i>
+                      </span>
+                      <p style="margin: 0; padding: 0; text-align: left">
+                        Text 3 kein type icon
+                      </p>
+                    </li>
+                    <li style="text-align: left" data-gjs-type="ulistitem">
+                      <span class="fa-li" style="left: -2em; width: 2em">
+                        <i
+                          class="fa-solid fa-igloo"
+                          data-gjs-type="icon"
+                          style="
+                            font-size: 1em;
+                            line-height: inherit;
+                            display: block;
+                          "
+                        ></i>
+                      </span>
+                      <p style="margin: 0; padding: 0; text-align: left">
+                        Text 4
+                      </p>
+                    </li>
+                  </ul>
+
+                  <ul class="ulist">
+                    <li>default ul li with ul class="ulist"</li>
+                    <li class="ulistitem">
+                      default ul li with ul class="ulist" & li class="ulistitem"
+                    </li>
+                  </ul>
+
+                  <ul>
+                    <li>default ul li no classes</li>
+                    <li>default ul li no classes [empty li (M&E) ↴]</li>
+                    <li></li>
+                    <li>
+                      <p>default ul li no classes with p tag</p>
+                    </li>
+                    <li><span>default ul li no classes with span tag</span></li>
+                  </ul>
+
+                  <ul
+                    class="ulist fa-ul"
+                    id="i8c9go"
+                    style="
+                      box-sizing: border-box;
+                      margin-top: 0px;
+                      margin-bottom: 10px;
+                      padding: 0.2em 0;
+                      margin-left: 2em;
+                      line-height: 1.4em;
+                    "
+                  >
+                    <li
+                      class="ulistitem"
+                      id="ia3uv2"
+                      style="box-sizing: border-box; text-align: left"
+                    >
+                      <span
+                        id="ibmh9h"
+                        class="fa-li"
+                        style="box-sizing: border-box; left: -2em; width: 2em"
+                        ><i
+                          class="fas fa-circle"
+                          id="imkxch"
+                          style="
+                            box-sizing: border-box;
+                            font-size: 0.4em;
+                            line-height: inherit;
+                            display: block;
+                          "
+                        >
+                        </i
+                      ></span>
+                      <p
+                        data-ost-type="benefits"
+                        id="ihgxlq"
+                        style="
+                          box-sizing: border-box;
+                          margin-top: 0px;
+                          margin-bottom: 10px;
+                          margin: 0;
+                          padding: 0;
+                          text-align: left;
+                        "
+                      >
+                        Original von Inserat
+                      </p>
+                    </li>
+                    <li
+                      class="ulistitem"
+                      id="icuzh5"
+                      style="box-sizing: border-box; text-align: left"
+                    >
+                      <span
+                        id="ijmtna"
+                        class="fa-li"
+                        style="box-sizing: border-box; left: -2em; width: 2em"
+                        ><i
+                          class="fas fa-circle"
+                          id="ii8g9t"
+                          style="
+                            box-sizing: border-box;
+                            font-size: 0.4em;
+                            line-height: inherit;
+                            display: block;
+                          "
+                        >
+                        </i
+                      ></span>
+                      <p
+                        data-ost-type="benefits"
+                        id="iw52xl"
+                        style="
+                          box-sizing: border-box;
+                          margin-top: 0px;
+                          margin-bottom: 10px;
+                          margin: 0;
+                          padding: 0;
+                          text-align: left;
+                        "
+                      >
+                        Original <b>von</b> Inserat
+                      </p>
+                    </li>
+                  </ul>
+                  <table class="list-item">
+                    <tr>
+                      <td class="list-item-cell">
+                        <table class="list-item-content">
+                          <tr class="list-item-row">
+                            <td class="list-cell-left">
+                              <img
+                                class="list-item-image"
+                                src="https://dummyimage.com/156x156/144c7b/fff"
+                                alt="Image1"
+                              />
+                            </td>
+                            <td class="list-cell-right">
+                              <h2 class="card-title">Built-in Blocks</h2>
+                              <p class="card-text">
+                                Drag and drop built-in blocks from the right
+                                panel and style them in a matter of seconds
+                              </p>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                  <table class="list-item">
+                    <tr>
+                      <td class="list-item-cell">
+                        <table class="list-item-content">
+                          <tr class="list-item-row">
+                            <td class="list-cell-left">
+                              <img
+                                class="list-item-image"
+                                src="https://dummyimage.com/156x156/144c7b/fff"
+                                alt="Image2"
+                              />
+                            </td>
+                            <td class="list-cell-right">
+                              <h2 class="card-title">Toggle images</h2>
+                              <p class="card-text">
+                                Build a good looking newsletter even without
+                                images enabled by the email clients
+                              </p>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                  <table class="grid-item-row">
+                    <tr>
+                      <td class="grid-item-cell2-l">
+                        <table class="grid-item-card">
+                          <tr>
+                            <td class="grid-item-card-cell">
+                              <img
+                                class="grid-item-image"
+                                src="https://dummyimage.com/250x250/144c7b/fff"
+                                alt="Image1"
+                              />
+                              <table class="grid-item-card-body">
+                                <tr>
+                                  <td class="grid-item-card-content">
+                                    <h3 class="card-title">Test it</h3>
+                                    <p class="card-text">
+                                      You can send email tests directly from the
+                                      editor and check how are looking on your
+                                      email clients
+                                    </p>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                      <td class="grid-item-cell2-r">
+                        <table class="grid-item-card">
+                          <tr>
+                            <td class="grid-item-card-cell">
+                              <img
+                                class="grid-item-image"
+                                src="https://dummyimage.com/250x250/144c7b/fff"
+                                alt="Image2"
+                              />
+                              <table class="grid-item-card-body">
+                                <tr>
+                                  <td class="grid-item-card-content">
+                                    <h3 class="card-title">Responsive</h3>
+                                    <p class="card-text">
+                                      Using the device manager you'll always
+                                      send a fully responsive contents
+                                    </p>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                  <table class="footer">
+                    <tr>
+                      <td class="footer-cell">
+                        <div class="c2577">
+                          <p class="footer-info">
+                            GrapesJS Newsletter Builder is a free and open
+                            source preset (plugin) used on top of the GrapesJS
+                            core library. For more information about and how to
+                            integrate it inside your applications check
+                          </p>
+                          <p>
+                            <a
+                              class="link"
+                              href="https://github.com/artf/grapesjs-preset-newsletter"
+                              >GrapesJS Newsletter Preset</a
+                            >
+                            <br />
+                          </p>
+                        </div>
+
+                        <div class="c2421">
+                          MADE BY
+                          <a class="link" href="https://github.com/artf"
+                            >ARTUR ARSENIEV</a
+                          >
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+
+      <style>
+        .link {
+          color: #144c7b;
+        }
+
+        .row {
+          vertical-align: top;
+        }
+
+        .main-body {
+          min-height: 150px;
+          padding: 5px;
+          width: 100%;
+          height: 100%;
+          background-color: rgb(234, 236, 237);
+        }
+
+        .c926 {
+          color: #144c7b;
+          width: 100%;
+          font-size: 50px;
+        }
+
+        .cell.c849 {
+          width: 11%;
+        }
+
+        .c1144 {
+          padding: 10px;
+          font-size: 17px;
+          font-weight: 300;
+        }
+
+        .card {
+          min-height: 150px;
+          padding: 5px;
+          margin-bottom: 20px;
+          height: 0px;
+        }
+
+        .card-cell {
+          background-color: rgb(255, 255, 255);
+          overflow: hidden;
+          border-radius: 3px;
+          padding: 0;
+          text-align: center;
+        }
+
+        .card.sector {
+          background-color: rgb(255, 255, 255);
+          border-radius: 3px;
+          border-collapse: separate;
+        }
+
+        .c1271 {
+          width: 100%;
+          margin: 0 0 15px 0;
+          font-size: 50px;
+          color: rgb(120, 197, 214);
+          line-height: 250px;
+          text-align: center;
+        }
+
+        .table100 {
+          width: 100%;
+        }
+
+        .c1357 {
+          min-height: 150px;
+          padding: 5px;
+          margin: auto;
+          height: 0px;
+        }
+
+        .darkerfont {
+          color: rgb(65, 69, 72);
+        }
+
+        .button {
+          font-size: 12px;
+          padding: 10px 20px;
+          background-color: #144c7b;
+          color: rgb(255, 255, 255);
+          text-align: center;
+          border-radius: 3px;
+          font-weight: 300;
+        }
+
+        .table100.c1437 {
+          text-align: left;
+        }
+
+        .cell.cell-bottom {
+          text-align: center;
+          height: 51px;
+        }
+
+        .card-title {
+          font-size: 25px;
+          font-weight: 300;
+          color: rgb(68, 68, 68);
+        }
+
+        .card-content {
+          font-size: 13px;
+          line-height: 20px;
+          color: rgb(111, 119, 125);
+          padding: 10px 20px 0 20px;
+          vertical-align: top;
+        }
+
+        .container {
+          font-family: Helvetica, serif;
+          min-height: 150px;
+          padding: 5px;
+          margin: auto;
+          height: 0px;
+          width: 90%;
+          max-width: 550px;
+        }
+
+        .cell.c856 {
+          vertical-align: middle;
+        }
+
+        .container-cell {
+          vertical-align: top;
+          font-size: medium;
+          padding-bottom: 50px;
+        }
+
+        .c1790 {
+          min-height: 150px;
+          padding: 5px;
+          margin: auto;
+          height: 0px;
+        }
+
+        .table100.c1790 {
+          min-height: 30px;
+          border-collapse: separate;
+          margin: 0 0 10px 0;
+        }
+
+        .browser-link {
+          font-size: 12px;
+        }
+
+        .top-cell {
+          text-align: right;
+          color: rgb(152, 156, 165);
+        }
+
+        .table100.c1357 {
+          margin: 0;
+          border-collapse: collapse;
+        }
+
+        .c1769 {
+          width: 30%;
+        }
+
+        .c1776 {
+          width: 70%;
+        }
+
+        .c1766 {
+          margin: 0 auto 10px 0;
+          padding: 5px;
+          width: 100%;
+          min-height: 30px;
+        }
+
+        .cell.c1769 {
+          width: 11%;
+        }
+
+        .cell.c1776 {
+          vertical-align: middle;
+        }
+
+        .c1542 {
+          margin: 0 auto 10px auto;
+          padding: 5px;
+          width: 100%;
+        }
+
+        .card-footer {
+          padding: 20px 0;
+          text-align: center;
+        }
+
+        .c2280 {
+          height: 150px;
+          margin: 0 auto 10px auto;
+          padding: 5px 5px 5px 5px;
+          width: 100%;
+        }
+
+        .c2421 {
+          padding: 10px;
+        }
+
+        .c2577 {
+          padding: 10px;
+        }
+
+        .footer {
+          margin-top: 50px;
+          color: rgb(152, 156, 165);
+          text-align: center;
+          font-size: 11px;
+          padding: 5px;
+        }
+
+        .quote {
+          font-style: italic;
+        }
+
+        .list-item {
+          height: auto;
+          width: 100%;
+          margin: 0 auto 10px auto;
+          padding: 5px;
+        }
+
+        .list-item-cell {
+          background-color: rgb(255, 255, 255);
+          border-radius: 3px;
+          overflow: hidden;
+          padding: 0;
+        }
+
+        .list-cell-left {
+          width: 30%;
+          padding: 0;
+        }
+
+        .list-cell-right {
+          width: 70%;
+          color: rgb(111, 119, 125);
+          font-size: 13px;
+          line-height: 20px;
+          padding: 10px 20px 0px 20px;
+        }
+
+        .list-item-content {
+          border-collapse: collapse;
+          margin: 0 auto;
+          padding: 5px;
+          height: 150px;
+          width: 100%;
+        }
+
+        .list-item-image {
+          color: #144c7b;
+          font-size: 45px;
+          width: 100%;
+        }
+
+        .grid-item-image {
+          line-height: 150px;
+          font-size: 50px;
+          color: rgb(120, 197, 214);
+          margin-bottom: 15px;
+          width: 100%;
+        }
+
+        .grid-item-row {
+          margin: 0 auto 10px;
+          padding: 5px 0;
+          width: 100%;
+        }
+
+        .grid-item-card {
+          width: 100%;
+          padding: 5px 0;
+          margin-bottom: 10px;
+        }
+
+        .grid-item-card-cell {
+          background-color: rgb(255, 255, 255);
+          overflow: hidden;
+          border-radius: 3px;
+          text-align: center;
+          padding: 0;
+        }
+
+        .grid-item-card-content {
+          font-size: 13px;
+          color: rgb(111, 119, 125);
+          padding: 0 10px 20px 10px;
+          width: 100%;
+          line-height: 20px;
+        }
+
+        .grid-item-cell2-l {
+          vertical-align: top;
+          padding-right: 10px;
+          width: 50%;
+        }
+
+        .grid-item-cell2-r {
+          vertical-align: top;
+          padding-left: 10px;
+          width: 50%;
+        }
+      </style>
+    </div>
+
+    <script type="text/javascript">
+      // Set up GrapesJS editor with the plugin
+      const editor = grapesjs.init({
+        height: "100%",
+        storageManager: false,
+        richTextEditor: {
+          actions: ["bold", "italic", "underline", "link"], // command removeFormate
+          onPaste: ({ ev, rte }) => {
+            ev.preventDefault();
+            const { clipboardData } = ev;
+            const text = clipboardData.getData("text");
+            rte.exec("insertText", text);
+          },
+        },
+        log: ["warning", "error"],
+        container: "#gjs",
+        fromElement: true,
+        cssIcons: null,
+        canvas: {
+          styles: ["https://use.fontawesome.com/releases/v6.7.2/css/all.css"],
+        },
+        blockManager: { appendOnClick: false },
+
+        // plugins: ["@ostendis/grapesjs-preset-ostendis-adv"],
+        // pluginsOpts: {
+        //   "@ostendis/grapesjs-preset-ostendis-adv": {},
+        // },
+      });
+      // Unsorted list item component
+      editor.DomComponents.addType("ulistitem", {
+        isComponent: (el) => {
+          if (el.tagName === "LI" && el.classList.contains("ulistitem")) {
+            return { type: "ulistitem" };
+          }
+        },
+        model: {
+          defaults: {
+            tagName: "li",
+            draggable: "ul",
+            attributes: { class: "ulistitem" },
+            style: { "text-align": "left" },
+            components: [
+              {
+                tagName: "span",
+                attributes: { class: "fa-li" },
+                style: { left: "-2em", width: "2em" },
+                components: [
+                  {
+                    tagName: "i",
+                    attributes: {
+                      class: "fas fa-circle",
+                      "data-gjs-type": "icon",
+                    },
+                    style: {
+                      "font-size": "0.4em",
+                      "line-height": "inherit",
+                      display: "block",
+                    },
+                  },
+                ],
+              },
+              {
+                type: "text",
+                tagName: "p",
+                content: "Text",
+                style: { margin: "0", padding: "0", "text-align": "left" },
+              },
+            ],
+            traits: ["id", "title"],
+          },
+        },
+      });
+
+      // Unsorted list component with fontawesome
+      editor.DomComponents.addType("ulist", {
+        isComponent: (el) => {
+          if (el.tagName === "UL" && el.classList.contains("ulist")) {
+            return { type: "ulist" };
+          }
+        },
+        model: {
+          defaults: {
+            tagName: "ul",
+            attributes: { class: "ulist fa-ul" },
+            style: {
+              padding: "0.2em 0",
+              "margin-left": "2em",
+              "line-height": "1.4em",
+            },
+            components: [
+              {
+                type: "ulistitem",
+                tagName: "li",
+                attributes: { class: "ulistitem" },
+                style: { "text-align": "left" },
+                components: [
+                  {
+                    tagName: "span",
+                    attributes: { class: "fa-li" },
+                    style: { left: "-2em", width: "2em" },
+                    components: [
+                      {
+                        type: "icon",
+                        tagName: "i",
+                        attributes: {
+                          class: "fas fa-circle",
+                          "data-gjs-type": "icon",
+                        },
+                        style: {
+                          "font-size": "0.4em",
+                          "line-height": "inherit",
+                          display: "block",
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    type: "text",
+                    tagName: "p",
+                    content: "Text",
+                    style: { margin: "0", padding: "0", "text-align": "left" },
+                  },
+                ],
+              },
+              {
+                type: "ulistitem",
+                tagName: "li",
+                attributes: { class: "ulistitem" },
+                style: { "text-align": "left" },
+                components: [
+                  {
+                    tagName: "span",
+                    attributes: { class: "fa-li" },
+                    style: { left: "-2em", width: "2em" },
+                    components: [
+                      {
+                        type: "icon",
+                        tagName: "i",
+                        attributes: {
+                          class: "fas fa-circle",
+                          "data-gjs-type": "icon",
+                        },
+                        style: {
+                          "font-size": "0.4em",
+                          "line-height": "inherit",
+                          display: "block",
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    type: "text",
+                    tagName: "p",
+                    content: "Text",
+                    style: { margin: "0", padding: "0", "text-align": "left" },
+                  },
+                ],
+              },
+            ],
+            traits: ["id"],
+          },
+        },
+      });
+      editor.BlockManager.add("ulist", {
+        label: "Liste",
+        category: "Custom",
+        media: `<svg style="width:60px" viewBox="0 0 12.7 9.525" xmlns="http://www.w3.org/2000/svg">
+        <path fill="currentColor" d="m2.3859 2.1921a0.52917 0.52917 0 0 0-0.52917 0.52917 0.52917 0.52917 0 0 0 0.52917 0.52917 0.52917 0.52917 0 0 0 0.52917-0.52917 0.52917 0.52917 0 0 0-0.52917-0.52917zm1.2707 0.26458v0.52917h7.2135v-0.52917h-7.2135zm-1.2707 1.7766a0.52917 0.52917 0 0 0-0.52917 0.52917 0.52917 0.52917 0 0 0 0.52917 0.52917 0.52917 0.52917 0 0 0 0.52917-0.52917 0.52917 0.52917 0 0 0-0.52917-0.52917zm1.2707 0.26458v0.52917h7.2135v-0.52917h-7.2135zm-1.2707 1.7766a0.52917 0.52917 0 0 0-0.52917 0.52917 0.52917 0.52917 0 0 0 0.52917 0.52917 0.52917 0.52917 0 0 0 0.52917-0.52917 0.52917 0.52917 0 0 0-0.52917-0.52917zm1.2707 0.26458v0.52917h7.2135v-0.52917h-7.2135z"/>
+      </svg>`,
+        content: {
+          type: "ulist",
+        },
+      });
+      // On selected components
+      editor.on("component:selected", () => {
+        let selected = editor.getSelected();
+
+        if (selected != undefined) {
+          if (selected.is("ulistitem")) {
+            showOstToolbar(selected);
+          } else if (selected.isChildOf("ulistitem")) {
+            showOstToolbar(selected.closestType("ulistitem"));
+          } else if (selected.getEl()?.tagName === "LI") {
+            // If list element is empty replace with placeholder text (M&E case:)
+            if (
+              selected.components().length === 0 &&
+              !selected.get("content")
+            ) {
+              var selectedPosition = selected.index();
+              var newComponent = selected
+                .parent()
+                ?.append("<li>Text</li>", { at: selectedPosition });
+              selected.remove();
+              editor.select(newComponent);
+              selected = editor.getSelected();
+            }
+            showOstToolbar(selected);
+          } else if (isChildOfElement(selected.getEl(), "LI")) {
+            showOstToolbar(selected.closest("li"));
+          }
+        }
+      });
+      editor.on("load", () => {
+        // Create ostendis toolbar
+        const tools = document.getElementById("gjs-tools");
+        const ostTools = document.createElement("div");
+        ostTools.classList.add("gjs-ost-toolbar");
+        tools?.append(ostTools);
+      });
+
+      function isChildOfElement(element, tag) {
+        while (element?.parentNode) {
+          element = element.parentNode;
+          if (element.tagName === tag) return element;
+        }
+        return false;
+      }
+
+      function showOstToolbar(listItem) {
+        var elPos = listItem?.index() || 0;
+        var elLast = listItem?.parent()?.getLastChild().index();
+
+        var ostToolbar = document.querySelector(".gjs-ost-toolbar");
+        if (ostToolbar != undefined) {
+          ostToolbar.innerHTML = "";
+
+          // Add clone button
+          const cBtn = document.createElement("div");
+          cBtn.innerHTML =
+            '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 3a9 9 0 0 0 0 18 9 9 0 0 0 0-18zm-1.3 3.88h2.6v3.82h3.82v2.6H13.3v3.82h-2.6V13.3H6.88v-2.6h3.82z"/></svg>';
+          cBtn.classList.add("gjs-ost-toolbar-item", "clone");
+          cBtn.title = "clone";
+          cBtn.addEventListener("click", () => {
+            if (!listItem || !editor) return;
+            listItem?.parent()?.append(listItem?.clone(), { at: elPos + 1 });
+          });
+          ostToolbar.appendChild(cBtn);
+
+          //Add delete button
+          const dBtn = document.createElement("div");
+          dBtn.innerHTML =
+            '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm5.12 7.7v2.6H6.88v-2.6z"/></svg>';
+          dBtn.title = "delete";
+          dBtn.classList.add("gjs-ost-toolbar-item", "del");
+          if (elLast != 0) {
+            dBtn.addEventListener("click", () => {
+              listItem?.remove();
+              ostToolbar?.classList.remove("show");
+            });
+          } else {
+            dBtn.classList.add("disable");
+          }
+          ostToolbar.appendChild(dBtn);
+
+          // Add move up button
+          const upBtn = document.createElement("div");
+          upBtn.innerHTML =
+            '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M1.9 20.75 12 3.25l10.1 17.5Z"/></svg>';
+          upBtn.title = "up";
+          upBtn.classList.add("gjs-ost-toolbar-item", "up");
+          if (elPos > 0) {
+            upBtn.addEventListener("click", () => {
+              if (elPos && listItem?.parent() != undefined) {
+                let parent = listItem.parent();
+                if (parent) {
+                  listItem?.move(parent, { at: elPos - 1 });
+                }
+                editor.selectRemove(listItem);
+                editor.select(listItem);
+              }
+            });
+          } else {
+            upBtn.classList.add("disable");
+          }
+          ostToolbar.appendChild(upBtn);
+
+          // Add move down button
+          const dwnBtn = document.createElement("div");
+          dwnBtn.innerHTML =
+            '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M22.4 3.25 12 20.75 1.6 3.25Z"/></svg>';
+          dwnBtn.title = "down";
+          dwnBtn.classList.add("gjs-ost-toolbar-item", "down");
+          if (elPos != elLast) {
+            var toPos = elPos + 2;
+            if (elPos == elLast) {
+              toPos = 0;
+            }
+            dwnBtn.addEventListener("click", () => {
+              if (toPos && listItem?.parent() != undefined) {
+                let parent = listItem.parent();
+                if (parent) {
+                  listItem.move(parent, { at: toPos });
+                }
+                editor.selectRemove(listItem);
+                editor.select(listItem);
+              }
+            });
+          } else {
+            dwnBtn.classList.add("disable");
+          }
+          ostToolbar.appendChild(dwnBtn);
+
+          // Add show
+          ostToolbar.classList.add("show");
+        }
+      }
+    </script>
+  </body>
+</html>

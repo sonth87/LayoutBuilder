@@ -1,0 +1,88 @@
+/* Custom GrapesJS styling */
+.gjs-editor {
+  border: none !important;
+}
+
+.gjs-cv-canvas {
+  background: #f8f9fa;
+}
+
+.gjs-block {
+  width: auto;
+  height: auto;
+  min-height: auto;
+  padding: 8px;
+  margin: 4px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gjs-block:hover {
+  border-color: #007bff;
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.1);
+}
+
+.gjs-block-section {
+  background: #e3f2fd;
+}
+
+.gjs-pn-panel {
+  background: white;
+  border: 1px solid #e0e0e0;
+}
+
+.gjs-pn-btn {
+  padding: 8px 12px;
+  margin: 2px;
+  border: none;
+  background: #f5f5f5;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gjs-pn-btn svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+
+.gjs-pn-btn:hover {
+  background: #e0e0e0;
+}
+
+.gjs-pn-btn.gjs-pn-active {
+  background: #007bff;
+  color: white;
+}
+
+.gjs-sm-sector .gjs-sm-title {
+  background: #f8f9fa;
+  padding: 8px 12px;
+  border-bottom: 1px solid #e0e0e0;
+  font-weight: 600;
+}
+
+.gjs-sm-property {
+  padding: 8px 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.gjs-layers {
+  background: white;
+}
+
+.gjs-layer {
+  padding: 4px 8px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.gjs-layer:hover {
+  background: #f8f9fa;
+}

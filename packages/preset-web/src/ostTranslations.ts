@@ -5,7 +5,7 @@ export const ostTrans: OstTranslations = {
   cmdBtnTabletLabel: "Tablet",
   cmdBtnMobileLabel: "Mobile",
 
-  cmdBtnViewOstBlocks: "View Ostendis Blocks",
+  cmdBtnViewOstBlocks: "View Blocks",
   cmdBtnViewCompLabel: "View components",
   cmdBtnImportLabel: "Import template",
   cmdBtnExportLabel: "Export template",
@@ -80,7 +80,7 @@ export const ostTrans: OstTranslations = {
   traitHeaderSelectH5: "H5",
   traitHeaderSelectH6: "H6 (lowest)",
 
-  traitBlkOstendisTooltip: "Define Ostendis block.",
+  traitBlkOstendisTooltip: "Define block.",
   traitOstNone: "None",
   traitOstOrganizationHeading: "Organization Heading",
   traitOstOrganization: "Organization",

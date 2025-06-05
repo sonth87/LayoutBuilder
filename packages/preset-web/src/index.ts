@@ -53,7 +53,7 @@ const plugin: Plugin<PluginOptions> = async (
 
   // On load
   editor.on("load", () => {
-    // Create ostendis toolbar
+    // Create webtoolbar
     const tools = document.getElementById("gjs-tools");
     const ostTools = document.createElement("div");
     ostTools.classList.add("gjs-ost-toolbar");

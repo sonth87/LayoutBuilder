@@ -48,11 +48,11 @@ export const ulListItem = {
   components: uListItemContent,
 };
 
-// Define ostendis type trait for text and default components
+// Define webtype trait for text and default components
 export function ostTypeTextTrait(opts: Required<PluginOptions>) {
   return {
     type: "ost-blocks-select",
-    label: "Ostendis Blocks",
+    label: "Blocks",
     name: "data-ost-type",
     attributes: {
       "data-tooltip": opts.t9n.traitBlkOstendisTooltip,
@@ -78,11 +78,11 @@ export function ostTypeTextTrait(opts: Required<PluginOptions>) {
     ],
   };
 }
-// Define ostendis type trait for images
+// Define webtype trait for images
 export function ostTypeImageTrait(opts: Required<PluginOptions>) {
   return {
     type: "ost-blocks-select",
-    label: "Ostendis Blocks",
+    label: "Blocks",
     name: "data-ost-type",
     attributes: {
       "data-tooltip": opts.t9n.traitBlkOstendisTooltip,
@@ -103,7 +103,7 @@ export function ostTypeImageTrait(opts: Required<PluginOptions>) {
     ],
   };
 }
-// Define ostendis type "hide in simple html"
+// Define webtype "hide in simple html"
 export function ostTypeHideInSimpleHtmlTrait(opts: Required<PluginOptions>) {
   return {
     type: "checkbox",
@@ -117,7 +117,7 @@ export function ostTypeHideInSimpleHtmlTrait(opts: Required<PluginOptions>) {
     },
   };
 }
-// Define ostendis type header
+// Define webtype header
 export function headerTrait(opts: Required<PluginOptions>) {
   return {
     type: "select",
@@ -134,7 +134,7 @@ export function headerTrait(opts: Required<PluginOptions>) {
     changeProp: true,
   };
 }
-// Define ostendis type trait for icons
+// Define webtype trait for icons
 export function iconTrait(opts: Required<PluginOptions>) {
   return {
     type: "select",

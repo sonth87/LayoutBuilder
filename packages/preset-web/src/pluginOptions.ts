@@ -81,12 +81,12 @@ export default interface PluginOptions {
   juiceOpts?: juice.Options;
 
   /**
-   * Ostendis translations
+   * translations
    */
   t9n?: OstTranslations;
 
   /**
-   * Ostendis blocks
+   * blocks
    */
   usedOstBlocks?: {
     name: string;

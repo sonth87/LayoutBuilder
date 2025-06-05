@@ -1,7 +1,7 @@
 {
   "name": "preset-web",
   "version": "1.0.0",
-  "description": "GrapesJS preset configuration for the Ostendis editor",
+  "description": "GrapesJS preset configuration for the web editor",
   "main": "dist/preset-web.min.js",
   "module": "dist/preset-web.min.js",
   "types": "dist/index.d.ts",
@@ -33,10 +33,9 @@
   "keywords": [
     "grapesjs",
     "plugin",
-    "preset",
-    "ostendis"
+    "preset"
   ],
-  "author": "Ostendis AG",
+  "author": "Skyline",
   "license": "BSD-3-Clause",
   "devDependencies": {
     "@babel/preset-typescript": "^7.24.7",

@@ -15,7 +15,7 @@ import {
 export default (editor: Editor, opts: Required<PluginOptions>) => {
   const { DomComponents } = editor;
 
-  // Add ostendis block trait to video components
+  // Add webblock trait to video components
   var dType = DomComponents.getType("video");
   var dModel = dType?.model;
   var dView = dType?.view;
@@ -46,7 +46,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
 
         traits.push({
           type: "select",
-          label: "Ostendis Blocks",
+          label: "Blocks",
           name: "data-ost-type",
           options: [
             { id: "", name: opts.t9n.traitOstNone },
@@ -249,7 +249,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
     },
   });
 
-  // Add ostendis type trait to table components
+  // Add webtype trait to table components
   DomComponents.addType("table", {
     model: {
       defaults: {
@@ -262,7 +262,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
     },
   });
 
-  // Add ostendis type trait to link components
+  // Add webtype trait to link components
   DomComponents.addType("link", {
     model: {
       defaults: {
@@ -277,7 +277,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
     },
   });
 
-  // Add ostendis type trait to image components
+  // Add webtype trait to image components
   DomComponents.addType("image", {
     model: {
       defaults: {
@@ -291,7 +291,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
     },
   });
 
-  // Add ostendis type trait to text components
+  // Add webtype trait to text components
   DomComponents.addType("textnode", {
     model: {
       defaults: {
@@ -304,7 +304,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
     },
   });
 
-  // Add ostendis type trait to text components
+  // Add webtype trait to text components
   DomComponents.addType("text", {
     model: {
       defaults: {
@@ -317,7 +317,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
     },
   });
 
-  // Add ostendis type trait to default components
+  // Add webtype trait to default components
   DomComponents.addType("default", {
     model: {
       defaults: {

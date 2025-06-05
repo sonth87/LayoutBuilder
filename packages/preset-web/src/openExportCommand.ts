@@ -16,6 +16,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
   cmdm.add(opts.cmdOpenExport, {
     containerEl: null as HTMLDivElement | null,
     codeEditorHtml: null as HTMLDivElement | null,
+    splitView: false as boolean,
 
     createCodeViewer(): any {
       return editor.CodeManager.createViewer({
@@ -80,7 +81,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
       if (codeEditorHtml) {
         const tmpl = `${editor.getHtml()}<style>${editor.getCss()}</style>`;
         codeEditorHtml.setContent(
-          opts.inlineCss ? juice(tmpl, opts.juiceOpts) : tmpl
+          tmpl//opts.inlineCss ? juice(tmpl, opts.juiceOpts) : tmpl
         );
         codeEditorHtml.editor.refresh();
       }

@@ -1,5 +1,4 @@
 import type { Editor } from "grapesjs";
-import juice from "juice";
 import PluginOptions from "./pluginOptions";
 
 export default (editor: Editor, opts: Required<PluginOptions>) => {
@@ -17,10 +16,9 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
       });
     },
 
-    getJsonData() {
-      const json = editor.getProjectData();
-      const jsonData = JSON.stringify(json);
-      console.log("Exported JSON data:", jsonData);
+    getJsonData(_editor: Editor): string {
+      const json = _editor.getProjectData();
+      const jsonData = JSON.stringify(json, null, 2);
       return jsonData;
     },
 
@@ -77,8 +75,8 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
       });
 
       if (codeEditorJson) {
-        codeEditorJson?.setContent?.(this.getJsonData());
-        codeEditorJson?.editor?.refresh?.();
+        codeEditorJson.setContent(this.getJsonData(editor));
+        codeEditorJson.editor.refresh();
       }
     },
   });

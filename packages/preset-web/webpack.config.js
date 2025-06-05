@@ -4,21 +4,21 @@ module.exports = (env = {}) => {
   // Handle both direct webpack call and grapesjs-cli call
   const inputConfig = env.config || {};
   const isProduction = process.env.NODE_ENV === "production" || env.production;
-  
+
   const config = {
     mode: isProduction ? "production" : "development",
     entry: {
       "preset-web": "./src/index.ts",
     },
     output: {
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname, "dist"),
       filename: "[name].min.js",
       library: {
         type: "umd", // Universal Module Definition format
         name: "preset-web", // This should match the name in your plugin
-        export: "default" // Explicitly set default export
+        export: "default", // Explicitly set default export
       },
-      globalObject: 'this' // Ensures compatibility in both browser and Node.js
+      globalObject: "this", // Ensures compatibility in both browser and Node.js
     },
     devServer: {
       static: {
@@ -33,13 +33,28 @@ module.exports = (env = {}) => {
           loader: "ts-loader",
           exclude: ["/node_modules/"],
         },
+        // Fix CSS loader issue - update to include node_modules
+        {
+          test: /\.css$/i,
+          use: ["style-loader", "css-loader"],
+          include: [
+            path.resolve(__dirname, "src"),
+            path.resolve(__dirname, "node_modules"),
+          ],
+        },
+        // Add SCSS handling rules
+        {
+          test: /\.s[ac]ss$/i,
+          use: ["style-loader", "css-loader", "sass-loader"],
+        },
       ],
     },
     resolve: {
-      extensions: [".ts", ".tsx", ".js"],
+      extensions: [".ts", ".tsx", ".js", ".css", ".scss"],
+      modules: ["node_modules"],
     },
     // Merge any additional configuration from grapesjs-cli
-    ...inputConfig
+    ...inputConfig,
   };
 
   return config;

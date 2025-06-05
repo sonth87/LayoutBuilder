@@ -188,17 +188,10 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
       htmlContainer.style.gridColumn = this.splitView ? "span 1" : "span 2";
 
       // Create HTML editor if not yet instantiated
-      if (!codeEditorHtml) {
-        const htmlViewer = this.createCodeEditor();
-        codeEditorHtml = htmlViewer.codeEditor;
-        this.codeEditorHtml = codeEditorHtml;
-        htmlContainer.appendChild(htmlViewer.el);
-      } else {
-        const parentNode = codeEditorHtml.el?.parentNode;
-        if (parentNode) {
-          htmlContainer.appendChild(parentNode);
-        }
-      }
+      const htmlViewer = this.createCodeEditor();
+      codeEditorHtml = htmlViewer.codeEditor;
+      this.codeEditorHtml = codeEditorHtml;
+      htmlContainer.appendChild(htmlViewer.el);
 
       container.appendChild(htmlContainer);
 
@@ -209,15 +202,10 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
       cssContainer.style.display = this.splitView ? "block" : "none";
 
       // Create CSS editor if not yet instantiated
-      if (!codeEditorCss) {
-        const cssViewer = this.createCssEditor();
-        codeEditorCss = cssViewer.codeEditor;
-        this.codeEditorCss = codeEditorCss;
-        cssContainer.appendChild(cssViewer.el);
-      } else {
-        if (codeEditorCss.el.parentNode)
-          cssContainer.appendChild(codeEditorCss.el.parentNode);
-      }
+      const cssViewer = this.createCssEditor();
+      codeEditorCss = cssViewer.codeEditor;
+      this.codeEditorCss = codeEditorCss;
+      cssContainer.appendChild(cssViewer.el);
 
       container.appendChild(cssContainer);
 

@@ -13,7 +13,7 @@ export default function (editor: Editor, opts: Required<PluginOptions>) {
       });
   };
 
-  Blocks.getAll().reset();
+  Blocks?.getAll()?.reset();
 
   Blocks.add("applyQrCode", {
     label: opts.t9n.applyQrCodeBlkLabel,

@@ -12,11 +12,13 @@ import { panelsManager } from "./editor/panelsManager";
 import { deviceManager } from "./editor/deviceManager";
 import { loadProjectContent } from "@/libs/utils";
 import DevicePanel from "./editor/DevicePanel";
+import { set } from "date-fns";
 const presetWeb = presetWebModule.default || presetWebModule;
 
 export const GrapesEditor = ({ editorInstanceRef, activeProject }) => {
   const editorRef = useRef<HTMLDivElement>(null);
   const [activeDevice, setActiveDevice] = useState<string>("Desktop");
+  const [dragMode, setDragMode] = useState<string>("translate");
 
   const handleSetDevice = (deviceName: string) => {
     editorInstanceRef.current?.setDevice(deviceName);
@@ -28,6 +30,7 @@ export const GrapesEditor = ({ editorInstanceRef, activeProject }) => {
 
     editorInstanceRef.current = grapesjs.init({
       container: editorRef.current,
+      dragMode: "translate", // 'absolute' | 'translate'
       height: "100%",
       width: "100%",
       storageManager: false,
@@ -148,11 +151,28 @@ export const GrapesEditor = ({ editorInstanceRef, activeProject }) => {
 
   return (
     <div className="h-full flex flex-col">
-      <div className="panel__devices bg-white border-b border-gray-200 p-2">
+      <div className="panel__devices bg-white border-b border-gray-200 p-2 flex justify-between">
         <DevicePanel
           activeDevice={activeDevice}
           handleSetDevice={handleSetDevice}
+          editorInstance={editorInstanceRef.current}
         />
+        <div>
+          <input
+            type="checkbox"
+            id="toggle-drag-mode"
+            value={dragMode === "absolute" ? "true" : "false"}
+            onChange={() => {
+              const _dragMode =
+                dragMode === "translate" ? "absolute" : "translate";
+              editorInstanceRef.current.setDragMode(_dragMode);
+              setDragMode(_dragMode);
+            }}
+          />
+          <label htmlFor="toggle-drag-mode" className="ml-2">
+            Drag Mode: {dragMode}
+          </label>
+        </div>
       </div>
       <div className="editor-row flex-1 flex">
         {/* <BlocksPanel /> */}

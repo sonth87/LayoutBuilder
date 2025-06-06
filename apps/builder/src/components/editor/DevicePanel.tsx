@@ -1,14 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 type DeviceProps = {
   activeDevice: string;
   handleSetDevice: (device: string) => void;
+  editorInstance?: any; // Add editor instance prop
 };
 
 const DevicePanel: React.FC<DeviceProps> = ({
   activeDevice,
   handleSetDevice,
+  editorInstance,
 }) => {
+  // Effect to handle background image when device changes
+  useEffect(() => {
+    if (!editorInstance) return;
+
+    if (activeDevice === "A4 Landscape") {
+      // Add background style for A4 Landscape
+      editorInstance.Canvas.getBody().style.backgroundImage = "url('/images/Phoi vb.png')";
+      editorInstance.Canvas.getBody().style.backgroundSize = "contain";
+      editorInstance.Canvas.getBody().style.backgroundRepeat = "no-repeat";
+      editorInstance.Canvas.getBody().style.backgroundPosition = "center";
+    } else {
+      // Remove background for other devices
+      editorInstance.Canvas.getBody().style.backgroundImage = "none";
+    }
+  }, [activeDevice, editorInstance]);
+
   return (
     <div className="flex gap-2">
       <button

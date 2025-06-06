@@ -12,7 +12,7 @@ module.exports = (env = {}) => {
     },
     output: {
       path: path.resolve(__dirname, "dist"),
-      filename: "[name].min.js",
+      filename: "[name].min.js", // Force this specific filename regardless of entry point name
       library: {
         type: "umd", // Universal Module Definition format
         name: "preset-web", // This should match the name in your plugin
@@ -53,9 +53,18 @@ module.exports = (env = {}) => {
       extensions: [".ts", ".tsx", ".js", ".css", ".scss"],
       modules: ["node_modules"],
     },
-    // Merge any additional configuration from grapesjs-cli
-    ...inputConfig,
   };
 
-  return config;
+  // Merge any additional configuration from grapesjs-cli, but preserve our output settings
+  const mergedConfig = {
+    ...config,
+    ...inputConfig,
+    output: {
+      ...config.output,
+      ...(inputConfig.output || {}),
+      filename: "preset-web.min.js", // Force this filename even after merge
+    },
+  };
+
+  return mergedConfig;
 };

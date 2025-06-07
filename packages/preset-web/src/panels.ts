@@ -110,6 +110,24 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
           </svg>`,
         },
         {
+          id: "extract-data-fields",
+          command: "extract-data-fields",
+          attributes: {
+            "data-tooltip": opts.t9n.cmdBtnExportJsonLabel,
+            "data-tooltip-pos": "bottom",
+          },
+          label: `json`,
+        },
+        {
+          id: "clean-json",
+          command: "clean-json",
+          attributes: {
+            "data-tooltip": "clear JSON",
+            "data-tooltip-pos": "bottom",
+          },
+          label: `xjson`,
+        },
+        {
           id: "undo",
           command: "core:undo",
           className: "fa-solid fa-rotate-left",

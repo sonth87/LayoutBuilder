@@ -12,7 +12,7 @@ import { panelsManager } from "./editor/panelsManager";
 import { deviceManager } from "./editor/deviceManager";
 import { loadProjectContent } from "@/libs/utils";
 import DevicePanel from "./editor/DevicePanel";
-import { set } from "date-fns";
+import parserPostCSS from "grapesjs-parser-postcss";
 const presetWeb = presetWebModule.default || presetWebModule;
 
 export const GrapesEditor = ({ editorInstanceRef, activeProject }) => {
@@ -30,11 +30,11 @@ export const GrapesEditor = ({ editorInstanceRef, activeProject }) => {
 
     editorInstanceRef.current = grapesjs.init({
       container: editorRef.current,
-      dragMode: "translate", // 'absolute' | 'translate'
+      // dragMode: "translate", // 'absolute' | 'translate'
       height: "100%",
       width: "100%",
       storageManager: false,
-      plugins: [presetWeb as any],
+      plugins: [parserPostCSS, presetWeb as any],
       i18n: {
         locale: "vi", // default locale
         detectLocale: true, // by default, the editor will detect the language

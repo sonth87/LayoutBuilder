@@ -12,6 +12,7 @@ import {
   ostTypeTextTrait,
   ostTypeHideInSimpleHtmlTrait,
 } from "./consts";
+import zoom from "./utils/zoom";
 
 export type RequiredPluginOptions = Required<PluginOptions>;
 
@@ -34,7 +35,7 @@ const plugin: Plugin<PluginOptions> = async (
     inlineCss: false,
     updateStyleManager: true,
     showStylesOnChange: true,
-    showBlocksOnLoad: false,
+    showBlocksOnLoad: true,
     showTraitsOnLoad: true,
     showOutlineOnLoad: true,
     t9n: ostTrans,
@@ -50,6 +51,7 @@ const plugin: Plugin<PluginOptions> = async (
   loadBlocks(editor, options);
   loadPanels(editor, options);
   await loadRte(editor, options);
+  zoom(editor, options);
 
   // On load
   editor.on("load", () => {

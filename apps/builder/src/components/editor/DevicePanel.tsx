@@ -17,7 +17,7 @@ const DevicePanel: React.FC<DeviceProps> = ({
 
     if (activeDevice === "A4 Landscape") {
       // Add background style for A4 Landscape
-      editorInstance.Canvas.getBody().style.backgroundImage = "url('/images/Phoi vb.png')";
+      editorInstance.Canvas.getBody().style.backgroundImage = "url('/images/phoi cu nhan.jpg')";
       editorInstance.Canvas.getBody().style.backgroundSize = "contain";
       editorInstance.Canvas.getBody().style.backgroundRepeat = "no-repeat";
       editorInstance.Canvas.getBody().style.backgroundPosition = "center";

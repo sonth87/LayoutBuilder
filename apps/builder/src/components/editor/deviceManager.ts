@@ -16,8 +16,8 @@ export const deviceManager = {
     },
     {
       name: "A4 Landscape",
-      width: "842px",
-      height: "595px",
+      width: "1096px",
+      height: "794px",
     },
   ],
 };

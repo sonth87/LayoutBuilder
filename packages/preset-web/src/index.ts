@@ -13,6 +13,7 @@ import {
   ostTypeHideInSimpleHtmlTrait,
 } from "./consts";
 import zoom from "./utils/zoom";
+import keyboardNavigation from "./utils/keyboardNavigation";
 
 export type RequiredPluginOptions = Required<PluginOptions>;
 
@@ -39,6 +40,7 @@ const plugin: Plugin<PluginOptions> = async (
     showTraitsOnLoad: true,
     showOutlineOnLoad: true,
     t9n: ostTrans,
+    keyboardMoveStep: 5,
     ...opts,
   };
 
@@ -52,6 +54,7 @@ const plugin: Plugin<PluginOptions> = async (
   loadPanels(editor, options);
   await loadRte(editor, options);
   zoom(editor, options);
+  keyboardNavigation(editor, options);
 
   // On load
   editor.on("load", () => {

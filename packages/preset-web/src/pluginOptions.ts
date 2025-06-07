@@ -92,6 +92,8 @@ export default interface PluginOptions {
     name: string;
     count: number;
   }[];
+
+  keyboardMoveStep?: number;
 }
 
 export type OstTranslations = {

@@ -1,4 +1,7 @@
 import typescript from "rollup-plugin-typescript2";
+import { obfuscator } from "rollup-obfuscator";
+import del from "rollup-plugin-delete";
+import copy from "rollup-plugin-copy";
 
 export default {
   input: "./src/index.ts",
@@ -10,10 +13,15 @@ export default {
     },
   ],
   plugins: [
+    del({ targets: ["./dist/*", "./build/dist/*"] }),
     typescript({
-      useTsconfigDeclarationDir: true,
+      useTsconfigDeclarationDir: false,
+    }),
+    obfuscator(),
+    copy({
+      targets: [{ src: "./dist/**/*", dest: "./build/dist/" }],
+      hook: "writeBundle",
     }),
   ],
   external: ["grapesjs", "juice"],
-  plugins: [typescript()],
 };

@@ -128,6 +128,21 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
           label: `xjson`,
         },
         {
+          id: "toggle-drag-mode",
+          command: "toggle-drag-mode",
+          context: "toggle-drag-mode",
+          className: "fa-solid fa-arrows",
+          attributes: {
+            "data-tooltip": opts.t9n.cmdBtnToggleDragModeLabel,
+            "data-tooltip-pos": "bottom",
+          },
+        },
+        {
+          id: "split-functions",
+          // className: "fa-solid fa-rotate-right",
+          label: "|"
+        },
+        {
           id: "undo",
           command: "core:undo",
           className: "fa-solid fa-rotate-left",

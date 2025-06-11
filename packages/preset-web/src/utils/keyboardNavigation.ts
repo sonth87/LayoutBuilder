@@ -91,6 +91,14 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
 
       // Trigger change event to update UI
       editor.trigger("component:update", selectedComponent);
+      
+      // Force editor to save state for undo/redo
+      editor.UndoManager.add({ 
+        component: selectedComponent,
+        style: { 
+          ...selectedComponent.getStyle()
+        }
+      });
 
       return selectedComponent;
     },
@@ -103,19 +111,21 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
     }
   });
 
-  // Add keyboard event listener
+  // Add keyboard event listener specifically to canvas frame
   const handleKeyDown = (e: KeyboardEvent) => {
-    // Only handle events when an element is selected and Alt key is pressed
+    // Only proceed if we have a selected component and Alt key is pressed
     const selectedComponent = editor.getSelected();
     if (!selectedComponent || !e.altKey) return;
-
-    // Prevent default arrow key behavior (scrolling)
-    if ([37, 38, 39, 40].includes(e.keyCode)) {
-      e.preventDefault();
-    }
+    
+    // Check if this is an arrow key
+    const isArrowKey = [37, 38, 39, 40].includes(e.keyCode);
+    if (!isArrowKey) return;
+    
+    // Stop propagation to prevent other handlers from catching this event
+    e.stopPropagation();
+    e.preventDefault();
 
     let direction;
-
     switch (e.keyCode) {
       case 38: // Up arrow
         direction = "up";
@@ -130,7 +140,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         direction = "right";
         break;
       default:
-        return; // Not an arrow key
+        return;
     }
 
     // Adjust move amount if shift key is also pressed
@@ -140,13 +150,75 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
     editor.runCommand("move-component", { direction, amount });
   };
 
-  // Add event listener when editor is loaded
+  // Attach event listener specifically to the canvas
+  const attachCanvasListeners = () => {
+    // Get the canvas element
+    const canvasEl = editor.Canvas.getElement();
+    const canvasDoc = editor.Canvas.getDocument();
+    const canvasWin = editor.Canvas.getWindow();
+    
+    if (canvasEl) {
+      canvasEl.addEventListener("keydown", handleKeyDown);
+    }
+    
+    if (canvasDoc) {
+      canvasDoc.addEventListener("keydown", handleKeyDown);
+    }
+    
+    if (canvasWin) {
+      canvasWin.addEventListener("keydown", handleKeyDown);
+    }
+    
+    // Also attach to main document as a fallback, but with focus check
+    document.addEventListener("keydown", (e) => {
+      // Only handle if focus is in the editor area
+      const activeEl = document.activeElement;
+      const editorEl = editor.getContainer();
+      
+      if (editorEl && (editorEl.contains(activeEl) || activeEl === editorEl)) {
+        handleKeyDown(e);
+      }
+    });
+  };
+
+  // Remove event listeners
+  const detachCanvasListeners = () => {
+    const canvasEl = editor.Canvas.getElement();
+    const canvasDoc = editor.Canvas.getDocument();
+    const canvasWin = editor.Canvas.getWindow();
+    
+    if (canvasEl) {
+      canvasEl.removeEventListener("keydown", handleKeyDown);
+    }
+    
+    if (canvasDoc) {
+      canvasDoc.removeEventListener("keydown", handleKeyDown);
+    }
+    
+    if (canvasWin) {
+      canvasWin.removeEventListener("keydown", handleKeyDown);
+    }
+    
+    document.removeEventListener("keydown", handleKeyDown);
+  };
+
+  // Add event listeners when editor is loaded
   editor.on("load", () => {
-    document.addEventListener("keydown", handleKeyDown);
+    // Short timeout to ensure canvas is fully initialized
+    setTimeout(() => {
+      attachCanvasListeners();
+    }, 100);
   });
 
-  // Clean up event listener when editor is closed
-  editor.on("destroy", () => {
-    document.removeEventListener("keydown", handleKeyDown);
+  // Clean up event listeners when editor is closed
+  editor.on("destroy", detachCanvasListeners);
+  
+  // Re-attach listeners when canvas is refreshed
+  editor.on("canvas:refresh", () => {
+    detachCanvasListeners();
+    // Short timeout to ensure canvas is fully refreshed
+    setTimeout(() => {
+      attachCanvasListeners();
+    }, 100);
   });
 };

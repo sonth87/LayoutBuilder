@@ -1,4 +1,5 @@
-import { Editor, PluginOptions } from "grapesjs";
+import { Editor } from "grapesjs";
+import PluginOptions from "../pluginOptions";
 
 export default (editor: Editor, opts: Required<PluginOptions>) => {
   const options = {

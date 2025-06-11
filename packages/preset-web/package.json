@@ -1,15 +1,15 @@
 {
   "name": "preset-web",
-  "version": "1.0.0",
+  "version": "1.0.19",
   "description": "GrapesJS preset configuration for the web editor",
-  "main": "dist/preset-web.min.js",
-  "module": "dist/preset-web.min.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/preset-web.min.js",
-      "require": "./dist/preset-web.min.js",
-      "types": "./src/index.ts"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./src/index.d.ts"
     },
     "./styles.css": "./dist/preset-web.css"
   },
@@ -20,10 +20,11 @@
   "scripts": {
     "v:patch": "npm version --no-git-tag-version patch",
     "start": "grapesjs-cli serve",
-    "build": "npm run build:js && npm run build:css",
-    "build:js": "grapesjs-cli build --patch=false",
+    "build": "npm run build:js && npm run build:css && npm run copy",
+    "build:js": "rollup -c",
     "build:css": "sass --no-source-map --style=compressed src/style/main.scss:dist/preset-web.css",
     "build:css:dev": "sass --source-map --style=expanded src/style/main.scss:dist/preset-web.css",
+    "copy": "mkdir -p build/dist && cp -r dist/* build/dist/",
     "watch": "npm run watch:js & npm run watch:css",
     "watch:js": "npx webpack --mode=development --watch",
     "watch:css": "sass --watch --source-map --style=expanded src/style/main.scss:dist/preset-web.css",
@@ -41,6 +42,9 @@
     "@babel/preset-typescript": "^7.24.7",
     "@types/jest": "^29.4.0",
     "@webpack-cli/generators": "^3.0.7",
+    "rollup": "^4.42.0",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "copy-webpack-plugin": "^13.0.0",
     "style-loader": "^4.0.0",
     "css-loader": "^7.1.2",
     "sass-loader": "^16.0.5",

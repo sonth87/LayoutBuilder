@@ -11,7 +11,7 @@ module.exports = (env = {}) => {
       "preset-web": "./src/index.ts",
     },
     output: {
-      path: path.resolve(__dirname, "dist"),
+      path: path.resolve(__dirname, "build/dist"),
       filename: "[name].min.js", // Force this specific filename regardless of entry point name
       library: {
         type: "umd", // Universal Module Definition format
@@ -19,6 +19,9 @@ module.exports = (env = {}) => {
         export: "default", // Explicitly set default export
       },
       globalObject: "this", // Ensures compatibility in both browser and Node.js
+    },
+    optimization: {
+      minimize: true,
     },
     devServer: {
       static: {
@@ -49,6 +52,7 @@ module.exports = (env = {}) => {
         },
       ],
     },
+    externals: { grapesjs: "grapesjs" },
     resolve: {
       extensions: [".ts", ".tsx", ".js", ".css", ".scss"],
       modules: ["node_modules"],
@@ -62,6 +66,7 @@ module.exports = (env = {}) => {
     output: {
       ...config.output,
       ...(inputConfig.output || {}),
+      path: path.resolve(__dirname, "dist"),
       filename: "preset-web.min.js", // Force this filename even after merge
     },
   };

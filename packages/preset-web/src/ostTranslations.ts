@@ -12,6 +12,8 @@ export const ostTrans: OstTranslations = {
   cmdBtnExportJsonLabel: "Export json",
   cmdBtnUndoLabel: "Undo",
   cmdBtnRedoLabel: "Redo",
+  cmdBtnToggleDragModeLabel: "Toggle drag mode",
+
   openStyleManager: "Open Style Manager",
   openTraits: "Open Parameter",
   openLayers: "Open Layer Manager",

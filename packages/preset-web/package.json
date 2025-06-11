@@ -20,7 +20,7 @@
   "scripts": {
     "v:patch": "npm version --no-git-tag-version patch",
     "start": "grapesjs-cli serve",
-    "build": "npm run build:js && npm run build:css",
+    "build": "npm run build:js && npm run build:css && npm run copy",
     "build:js": "rollup -c",
     "build:css": "sass --no-source-map --style=compressed src/style/main.scss:dist/preset-web.css",
     "build:css:dev": "sass --source-map --style=expanded src/style/main.scss:dist/preset-web.css",
@@ -47,6 +47,8 @@
     "rollup-obfuscator": "^4.1.1",
     "rollup-plugin-delete": "^3.0.1",
     "rollup-plugin-copy": "^3.5.0",
+    "rollup-plugin-postcss": "^4.0.2",
+    "autoprefixer": "^10.4.21",
     "copy-webpack-plugin": "^13.0.0",
     "style-loader": "^4.0.0",
     "css-loader": "^7.1.2",

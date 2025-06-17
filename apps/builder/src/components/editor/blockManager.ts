@@ -1,5 +1,5 @@
 export const blockManager = {
-  // appendTo: ".blocks-container",
+  appendTo: ".blocks-container",
   blocks: [
     // Layout Components
     {
@@ -17,21 +17,21 @@ export const blockManager = {
       label: "1 Column",
       category: "Layout",
       content:
-        '<div class="row"><div class="col-12" style="padding: 20px; border: 1px dashed #ccc;">Column content</div></div>',
+        "<div class=\"row\"><div class=\"col-12\" style=\"padding: 20px; border: 1px dashed #ccc;\">Column content</div></div>",
     },
     {
       id: "column2",
       label: "2 Columns",
       category: "Layout",
       content:
-        '<div class="row"><div class="col-6" style="padding: 20px; border: 1px dashed #ccc;">Column 1</div><div class="col-6" style="padding: 20px; border: 1px dashed #ccc;">Column 2</div></div>',
+        "<div class=\"row\"><div class=\"col-6\" style=\"padding: 20px; border: 1px dashed #ccc;\">Column 1</div><div class=\"col-6\" style=\"padding: 20px; border: 1px dashed #ccc;\">Column 2</div></div>",
     },
     {
       id: "column3",
       label: "3 Columns",
       category: "Layout",
       content:
-        '<div class="row"><div class="col-4" style="padding: 20px; border: 1px dashed #ccc;">Column 1</div><div class="col-4" style="padding: 20px; border: 1px dashed #ccc;">Column 2</div><div class="col-4" style="padding: 20px; border: 1px dashed #ccc;">Column 3</div></div>',
+        "<div class=\"row\"><div class=\"col-4\" style=\"padding: 20px; border: 1px dashed #ccc;\">Column 1</div><div class=\"col-4\" style=\"padding: 20px; border: 1px dashed #ccc;\">Column 2</div><div class=\"col-4\" style=\"padding: 20px; border: 1px dashed #ccc;\">Column 3</div></div>",
     },
 
     // Basic Components
@@ -40,21 +40,21 @@ export const blockManager = {
       label: "Text",
       category: "Basic",
       content:
-        '<div data-gjs-type="text" style="padding: 10px;">Insert your text here</div>',
+        "<div data-gjs-type=\"text\" style=\"padding: 10px;\">Insert your text here</div>",
     },
     {
       id: "button",
       label: "Button",
       category: "Basic",
       content:
-        '<button class="btn btn-primary" style="padding: 10px 20px; margin: 10px;">Click me</button>',
+        "<button class=\"btn btn-primary\" style=\"padding: 10px 20px; margin: 10px;\">Click me</button>",
     },
     {
       id: "link",
       label: "Link",
       category: "Basic",
       content:
-        '<a href="#" style="color: #007bff; text-decoration: underline;">Link text</a>',
+        "<a href=\"#\" style=\"color: #007bff; text-decoration: underline;\">Link text</a>",
     },
     {
       id: "image",
@@ -107,14 +107,14 @@ export const blockManager = {
       label: "Input",
       category: "Forms",
       content:
-        '<input type="text" placeholder="Enter text" class="form-control" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin: 10px 0;">',
+        "<input type=\"text\" placeholder=\"Enter text\" class=\"form-control\" style=\"width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin: 10px 0;\">",
     },
     {
       id: "textarea",
       label: "Textarea",
       category: "Forms",
       content:
-        '<textarea placeholder="Enter your message" class="form-control" rows="4" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin: 10px 0; resize: vertical;"></textarea>',
+        "<textarea placeholder=\"Enter your message\" class=\"form-control\" rows=\"4\" style=\"width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin: 10px 0; resize: vertical;\"></textarea>",
     },
     {
       id: "select",

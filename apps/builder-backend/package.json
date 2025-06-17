@@ -1,0 +1,34 @@
+{
+  "name": "builder-backend",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "npm run tsc",
+    "start": "node dist/index.js",
+    "tsc": "tsc -p tsconfig.json",
+    "dev": "npx nodemon ./src/index.ts",
+    "dev1": "tsc --watch & NODE_ENV=development nodemon dist",
+    "lint": "eslint . --format stylish",
+    "lint:check": "eslint . --format stylish",
+    "lint-fix": "eslint src --fix --ext .ts,.tsx"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "juice": "^11.0.1",
+    "mongoose": "^8.15.1",
+    "chrome-aws-lambda": "^10.1.0",
+    "puppeteer": "^24.10.1"
+  },
+  "devDependencies": {
+    "@types/puppeteer": "^5.4.7",
+    "nodemon": "^3.1.10",
+    "tsc": "^2.0.4",
+    "typescript": "^5.8.3"
+  }
+}

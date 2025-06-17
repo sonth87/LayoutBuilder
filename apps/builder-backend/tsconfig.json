@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "nodenext",
+    "esModuleInterop": true,
+    "moduleResolution": "nodenext",
+    "skipLibCheck": true,
+    "outDir": "dist/",
+    "sourceMap": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["typings/*", "node_modules"]
+}

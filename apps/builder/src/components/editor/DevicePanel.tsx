@@ -1,9 +1,10 @@
+import { Editor } from "preset-web";
 import React, { useEffect } from "react";
 
 type DeviceProps = {
   activeDevice: string;
   handleSetDevice: (device: string) => void;
-  editorInstance?: any; // Add editor instance prop
+  editorInstance?: Editor; // Add editor instance prop
 };
 
 const DevicePanel: React.FC<DeviceProps> = ({
@@ -17,13 +18,16 @@ const DevicePanel: React.FC<DeviceProps> = ({
 
     if (activeDevice === "A4 Landscape") {
       // Add background style for A4 Landscape
-      editorInstance.Canvas.getBody().style.backgroundImage = "url('/images/phoi cu nhan.jpg')";
-      editorInstance.Canvas.getBody().style.backgroundSize = "contain";
-      editorInstance.Canvas.getBody().style.backgroundRepeat = "no-repeat";
-      editorInstance.Canvas.getBody().style.backgroundPosition = "center";
+      editorInstance.setCanvasBackground({
+        image: "http://192.168.101.7:6789/images/phoi cu nhan.jpg",
+        repeat: "no-repeat",
+        position: "center",
+        size: "contain",
+      });
     } else {
       // Remove background for other devices
       editorInstance.Canvas.getBody().style.backgroundImage = "none";
+      editorInstance.resetCanvasBackground();
     }
   }, [activeDevice, editorInstance]);
 

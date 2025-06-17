@@ -17,6 +17,9 @@
     "lint": {
       "dependsOn": ["^lint"]
     },
+    "lint-fix": {
+      "outputs": []
+    },
     "check-types": {
       "dependsOn": ["^check-types"]
     },
@@ -26,7 +29,8 @@
     },
     "watch": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "dependsOn": ["^build"]
     }
   }
 }

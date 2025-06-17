@@ -14,7 +14,7 @@ export const loadProjectContent = (editor, projectName) => {
 
   try {
     const savedContent = localStorage.getItem(
-      `webbuilder_project_${projectName}`
+      `webbuilder_project_${projectName}`,
     );
     if (!savedContent) {
       console.info(`No saved content found for project: ${projectName}`);

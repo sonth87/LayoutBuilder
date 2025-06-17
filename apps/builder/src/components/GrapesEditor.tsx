@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { FC, RefObject, useEffect, useRef, useState } from "react";
 import grapesjs, { Device } from "grapesjs";
-import * as presetWebModule from "preset-web";
-import vi from "grapesjs/locale/vi";
-import en from "grapesjs/locale/en";
+import { Editor } from "preset-web";
+import presetWebModule from "preset-web";
+import vi from "grapesjs/locale/vi.js";
+import en from "grapesjs/locale/en.js";
 import LayerPanel from "./editor/LayerPanel";
 import BlocksPanel from "./editor/BlocksPanel";
 import { styleManager } from "./editor/styleManager";
@@ -10,12 +11,18 @@ import { blockManager } from "./editor/blockManager";
 import { layerManager } from "./editor/layerManager";
 import { panelsManager } from "./editor/panelsManager";
 import { deviceManager } from "./editor/deviceManager";
-import { loadProjectContent } from "@/libs/utils";
-import DevicePanel from "./editor/DevicePanel";
-import parserPostCSS from "grapesjs-parser-postcss";
-const presetWeb = presetWebModule.default || presetWebModule;
 
-export const GrapesEditor = ({ editorInstanceRef, activeProject }) => {
+import DevicePanel from "./editor/DevicePanel";
+
+type GjsEditorProps = {
+  initialContent?: string;
+  editorInstanceRef: RefObject<Editor>;
+};
+
+export const GjsEditor: FC<GjsEditorProps> = ({
+  initialContent,
+  editorInstanceRef,
+}) => {
   const editorRef = useRef<HTMLDivElement>(null);
   const [activeDevice, setActiveDevice] = useState<string>("Desktop");
   const [dragMode, setDragMode] = useState<string>("translate");
@@ -34,7 +41,7 @@ export const GrapesEditor = ({ editorInstanceRef, activeProject }) => {
       height: "100%",
       width: "100%",
       storageManager: false,
-      plugins: [parserPostCSS, presetWeb as any],
+      plugins: [presetWebModule],
       i18n: {
         locale: "vi", // default locale
         detectLocale: true, // by default, the editor will detect the language
@@ -46,7 +53,7 @@ export const GrapesEditor = ({ editorInstanceRef, activeProject }) => {
           modalImportTitle: "Import Template",
           modalImportLabel:
             '<div style="margin-bottom: 10px; font-size: 13px;">Paste here your HTML/CSS and click Import</div>',
-          modalImportContent: function (editor: any) {
+          modalImportContent: function (editor: Editor) {
             return editor.getHtml() + "<style>" + editor.getCss() + "</style>";
           },
           blocksBasicOpts: {
@@ -69,9 +76,9 @@ export const GrapesEditor = ({ editorInstanceRef, activeProject }) => {
         // ]
       },
       deviceManager: deviceManager,
-      panels: panelsManager,
-      layerManager: layerManager,
-      blockManager: blockManager,
+      // panels: panelsManager,
+      // layerManager: layerManager,
+      // blockManager: blockManager,
       // styleManager: styleManager,
     });
 
@@ -81,27 +88,27 @@ export const GrapesEditor = ({ editorInstanceRef, activeProject }) => {
 
     // Add device commands
     editorInstanceRef.current.Commands.add("set-device-desktop", {
-      run: (editor: any) => editor.setDevice("Desktop"),
+      run: (editor: Editor) => editor.setDevice("Desktop"),
     });
     editorInstanceRef.current.Commands.add("set-device-tablet", {
-      run: (editor: any) => editor.setDevice("Tablet"),
+      run: (editor: Editor) => editor.setDevice("Tablet"),
     });
     editorInstanceRef.current.Commands.add("set-device-mobile", {
-      run: (editor: any) => editor.setDevice("Mobile"),
+      run: (editor: Editor) => editor.setDevice("Mobile"),
     });
     editorInstanceRef.current.Commands.add("set-device-a4", {
-      run: (editor: any) => editor.setDevice("A4 Landscape"),
+      run: (editor: Editor) => editor.setDevice("A4 Landscape"),
     });
 
     // Add custom commands for panels
     editorInstanceRef.current.Commands.add("show-layers", {
-      getRowEl(editor: any) {
+      getRowEl(editor: Editor) {
         return editor.getContainer().closest(".editor-row");
       },
       getLayersEl(row: any) {
         return row.querySelector(".layers-container");
       },
-      run(editor: any, sender: any) {
+      run(editor: Editor, sender: any) {
         const lmEl = this.getLayersEl(this.getRowEl(editor));
         const smEl = this.getStyleEl(this.getRowEl(editor));
         if (lmEl) lmEl.style.display = "";
@@ -113,7 +120,7 @@ export const GrapesEditor = ({ editorInstanceRef, activeProject }) => {
     });
 
     editorInstanceRef.current.Commands.add("show-styles", {
-      getRowEl(editor: any) {
+      getRowEl(editor: Editor) {
         return editor.getContainer().closest(".editor-row");
       },
       getStyleEl(row: any) {
@@ -122,7 +129,7 @@ export const GrapesEditor = ({ editorInstanceRef, activeProject }) => {
       getLayersEl(row: any) {
         return row.querySelector(".layers-container");
       },
-      run(editor: any, sender: any) {
+      run(editor: Editor) {
         const smEl = this.getStyleEl(this.getRowEl(editor));
         const lmEl = this.getLayersEl(this.getRowEl(editor));
         if (smEl) smEl.style.display = "";
@@ -131,8 +138,8 @@ export const GrapesEditor = ({ editorInstanceRef, activeProject }) => {
     });
 
     // Optionally load previously saved content if available
-    if (activeProject) {
-      loadProjectContent(editorInstanceRef.current, activeProject);
+    if (initialContent) {
+      editorInstanceRef.current.setComponents(initialContent);
     }
 
     return () => {
@@ -140,14 +147,14 @@ export const GrapesEditor = ({ editorInstanceRef, activeProject }) => {
       editorInstanceRef.current?.destroy();
       editorInstanceRef.current = null;
     };
-  }, [editorInstanceRef, activeProject]);
+  }, [editorInstanceRef, initialContent]);
 
   // Add method to reload content - useful when activeProject changes
   useEffect(() => {
-    if (editorInstanceRef.current && activeProject) {
-      loadProjectContent(editorInstanceRef.current, activeProject);
+    if (editorInstanceRef.current && initialContent) {
+      editorInstanceRef.current.setComponents(initialContent);
     }
-  }, [activeProject]);
+  }, [initialContent]);
 
   return (
     <div className="h-full flex flex-col">
@@ -190,5 +197,28 @@ export const GrapesEditor = ({ editorInstanceRef, activeProject }) => {
   );
 };
 
-// You can also export the function to use elsewhere
-export { loadProjectContent };
+// import presetWebModule from "preset-web";
+
+// import grapesjs, { Editor, usePlugin } from "grapesjs";
+// import GjsEditor from "@grapesjs/react";
+// console.log(typeof presetWebModule, presetWebModule, "presetWebModule");
+// export const GrapesEditor = ({ editorInstanceRef, activeProject }) => {
+//   const onEditor = (editor: Editor) => {
+//     console.log("Editor loaded", { editor });
+//   };
+
+//   return (
+//     <GjsEditor
+//       grapesjs={grapesjs}
+//       plugins={[
+//         presetWebModule
+//       ]}
+//       grapesjsCss="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
+//       options={{
+//         height: "100vh",
+//         storageManager: false,
+//       }}
+//       onEditor={onEditor}
+//     />
+//   );
+// };

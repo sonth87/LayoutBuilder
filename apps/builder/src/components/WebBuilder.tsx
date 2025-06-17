@@ -1,29 +1,27 @@
-import { useRef, useState } from "react";
-import { Header } from "./Header";
-import { Sidebar } from "./Sidebar";
-import { GrapesEditor } from "./GrapesEditor";
+import { FC, RefObject, useEffect, useRef, useState } from "react";
+import { GjsEditor } from "./GrapesEditor";
+import juice from "juice";
+import { inlineHtml } from "@/libs/inlineHtml";
+import { Editor } from "preset-web";
 
-export const WebBuilder = () => {
-  const [activeProject, setActiveProject] = useState<string | null>(
-    "MyProject"
-  );
-  const editorInstanceRef = useRef(null);
+type WebBuilderProps = {
+  initialContent?: { html: string; css: string };
+  editorInstanceRef: RefObject<Editor>;
+};
 
+export const WebBuilder: FC<WebBuilderProps> = ({
+  initialContent,
+  editorInstanceRef,
+}) => {
   return (
-    <div className="h-screen flex flex-col bg-gray-50">
-      <Header
-        activeProject={activeProject}
-        editorInstance={editorInstanceRef}
+    <div className="h-full flex-1 bg-gray-50">
+      <GjsEditor
+        initialContent={inlineHtml(
+          initialContent?.html || "",
+          initialContent?.css || ""
+        )}
+        editorInstanceRef={editorInstanceRef}
       />
-      <div className="flex flex-1 overflow-hidden">
-        <Sidebar onProjectSelect={setActiveProject} />
-        <main className="flex-1">
-          <GrapesEditor
-            editorInstanceRef={editorInstanceRef}
-            activeProject={activeProject} // Pass the activeProject here
-          />
-        </main>
-      </div>
     </div>
   );
 };

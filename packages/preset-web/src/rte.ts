@@ -1,5 +1,4 @@
-import type { Editor } from "grapesjs";
-import PluginOptions from "./pluginOptions";
+import PluginOptions, { Editor } from "./types/pluginOptions";
 
 export default async (editor: Editor, opts: Required<PluginOptions>) => {
   const { RichTextEditor } = editor;

@@ -1,5 +1,5 @@
-import { Editor } from "grapesjs";
-import type PluginOptions from "../pluginOptions";
+import type PluginOptions from "../types/pluginOptions";
+import { Editor } from "../types/pluginOptions";
 import Piklor from "./colorPicker";
 
 // Thêm các interface để định nghĩa rõ kiểu dữ liệu
@@ -161,7 +161,9 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
   const formatBlock = "formatBlock";
   const rte: any = editor.RichTextEditor;
 
-  const fontNames = options.fonts?.fontName?.length ? options.fonts.fontName : false;
+  const fontNames = options.fonts?.fontName?.length
+    ? options.fonts.fontName
+    : false;
 
   const fontOptionsEl = fontNames
     ? fontNames
@@ -176,7 +178,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
   // Safely handle container ID
   const getContainerId = (): string => {
     const container = editor.Config.container;
-    if (typeof container === 'string') {
+    if (typeof container === "string") {
       return container.replace(/[^a-zA-Z0-9]/g, "");
     } else if (container instanceof HTMLElement && container.id) {
       return container.id.replace(/[^a-zA-Z0-9]/g, "");
@@ -215,7 +217,8 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         },
         result: (rte: RichTextEditor, action: ActionObject) => {
           const firstChild = action.btn.firstChild as HTMLSelectElement | null;
-          if (firstChild?.value) {  // Using optional chaining here
+          if (firstChild?.value) {
+            // Using optional chaining here
             rte.exec("fontName", firstChild.value);
           }
         },
@@ -223,8 +226,10 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         update: (rte: RichTextEditor, action: ActionObject) => {
           const value = rte.doc.queryCommandValue(action.name);
           if (value && value !== "false") {
-            const firstChild = action.btn.firstChild as HTMLSelectElement | null;
-            if (firstChild) {  // Null check
+            const firstChild = action.btn
+              .firstChild as HTMLSelectElement | null;
+            if (firstChild) {
+              // Null check
               firstChild.value = value;
             }
           }
@@ -252,7 +257,8 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         },
         result: (rte: RichTextEditor, action: ActionObject) => {
           const firstChild = action.btn.firstChild as HTMLSelectElement | null;
-          if (firstChild?.value) {  // Using optional chaining
+          if (firstChild?.value) {
+            // Using optional chaining
             rte.exec("fontSize", firstChild.value);
           }
         },
@@ -260,8 +266,10 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         update: (rte: RichTextEditor, action: ActionObject) => {
           const value = rte.doc.queryCommandValue(action.name);
           if (value && value !== "false") {
-            const firstChild = action.btn.firstChild as HTMLSelectElement | null;
-            if (firstChild) {  // Null check
+            const firstChild = action.btn
+              .firstChild as HTMLSelectElement | null;
+            if (firstChild) {
+              // Null check
               firstChild.value = value;
             }
           }
@@ -292,29 +300,28 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
           const containerId = getContainerId();
           const pickerId = `foreColor-picker-${containerId}`;
           const pikerEle = `#${pickerId}`;
-          
+
           if (!colorPickers[pickerId]) {
             const fontColors = options.fonts?.fontColor;
-            const colors = Array.isArray(fontColors) && fontColors.length > 0
-              ? fontColors
-              : null;
-              
+            const colors =
+              Array.isArray(fontColors) && fontColors.length > 0
+                ? fontColors
+                : null;
+
             try {
-              colorPickers[pickerId] = new Piklor(
-                pikerEle,
-                colors || [],
-                {
-                  open: "span#rte-font-color.gjs-rte-action",
-                  closeOnBlur: true,
-                }
-              );
+              colorPickers[pickerId] = new Piklor(pikerEle, colors || [], {
+                open: "span#rte-font-color.gjs-rte-action",
+                closeOnBlur: true,
+              });
             } catch (e) {
               console.error("Failed to initialize color picker:", e);
               return;
             }
           }
-          
-          colorPickers[pickerId]?.colorChosen((col) => rte.exec("foreColor", col));
+
+          colorPickers[pickerId]?.colorChosen((col) =>
+            rte.exec("foreColor", col)
+          );
         },
       });
     }
@@ -341,29 +348,28 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
           const containerId = getContainerId();
           const pickerId = `hilite-picker-${containerId}`;
           const pikerEle = `#${pickerId}`;
-          
+
           if (!colorPickers[pickerId]) {
             const hiliteColors = options.fonts?.hilite;
-            const colors = Array.isArray(hiliteColors) && hiliteColors.length > 0
-              ? hiliteColors
-              : null;
-              
+            const colors =
+              Array.isArray(hiliteColors) && hiliteColors.length > 0
+                ? hiliteColors
+                : null;
+
             try {
-              colorPickers[pickerId] = new Piklor(
-                pikerEle,
-                colors || [],
-                {
-                  open: "span#rte-font-hilite.gjs-rte-action",
-                  closeOnBlur: true,
-                }
-              );
+              colorPickers[pickerId] = new Piklor(pikerEle, colors || [], {
+                open: "span#rte-font-hilite.gjs-rte-action",
+                closeOnBlur: true,
+              });
             } catch (e) {
               console.error("Failed to initialize highlight color picker:", e);
               return;
             }
           }
-          
-          colorPickers[pickerId]?.colorChosen((col) => rte.exec("hiliteColor", col));
+
+          colorPickers[pickerId]?.colorChosen((col) =>
+            rte.exec("hiliteColor", col)
+          );
         },
       });
     }
@@ -378,7 +384,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         result: (rte: RichTextEditor) => rte.exec(formatBlock, "<h1>"),
       });
     }
-    
+
     if (options.format?.heading2) {
       rte.add("heading2", {
         icon: icons.heading2 || "<div>H2</div>",
@@ -388,7 +394,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         result: (rte: RichTextEditor) => rte.exec(formatBlock, "<h2>"),
       });
     }
-    
+
     if (options.format?.heading3) {
       rte.add("heading3", {
         icon: icons.heading3 || "<div>H3</div>",
@@ -398,7 +404,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         result: (rte: RichTextEditor) => rte.exec(formatBlock, "<h3>"),
       });
     }
-    
+
     if (options.format?.heading4) {
       rte.add("heading4", {
         icon: icons.heading4 || "<div>H4</div>",
@@ -408,7 +414,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         result: (rte: RichTextEditor) => rte.exec(formatBlock, "<h4>"),
       });
     }
-    
+
     if (options.format?.heading5) {
       rte.add("heading5", {
         icon: icons.heading5 || "<div>H5</div>",
@@ -418,7 +424,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         result: (rte: RichTextEditor) => rte.exec(formatBlock, "<h5>"),
       });
     }
-    
+
     if (options.format?.heading6) {
       rte.add("heading6", {
         icon: icons.heading6 || "<div>H6</div>",
@@ -428,7 +434,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         result: (rte: RichTextEditor) => rte.exec(formatBlock, "<h6>"),
       });
     }
-    
+
     if (options.format?.paragraph) {
       rte.add("paragraph", {
         icon: icons.paragraph || "&#182;",
@@ -438,7 +444,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         result: (rte: RichTextEditor) => rte.exec(formatBlock, "<p>"),
       });
     }
-    
+
     if (options.format?.quote) {
       rte.add("quote", {
         icon: icons.quote || '<i class="fa fa-quote-left"></i>',
@@ -448,7 +454,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         result: (rte: RichTextEditor) => rte.exec(formatBlock, "<blockquote>"),
       });
     }
-    
+
     if (options.format?.clearFormatting) {
       rte.add("clearFormatting", {
         icon: icons.clear || '<i class="fa fa-eraser"></i>',
@@ -458,7 +464,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         result: (rte: RichTextEditor) => rte.exec("removeFormat"),
       });
     }
-    
+
     if (options.indentOutdent) {
       rte.add("indent", {
         icon: icons.indent || '<i class="fa fa-indent"></i>',
@@ -467,7 +473,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         },
         result: (rte: RichTextEditor) => rte.exec("indent"),
       });
-      
+
       rte.add("outdent", {
         icon: icons.outdent || '<i class="fa fa-outdent"></i>',
         attributes: {
@@ -476,7 +482,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         result: (rte: RichTextEditor) => rte.exec("outdent"),
       });
     }
-    
+
     if (options.subscriptSuperscript) {
       rte.add("subscript", {
         icon: icons.subscript || "<div>X<sub>2</sub></div>",
@@ -485,7 +491,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         },
         result: (rte: RichTextEditor) => rte.exec("subscript"),
       });
-      
+
       rte.add("superscript", {
         icon: icons.superscript || "<div>X<sup>2</sup></div>",
         attributes: {
@@ -494,7 +500,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         result: (rte: RichTextEditor) => rte.exec("superscript"),
       });
     }
-    
+
     if (options.list) {
       rte.add("olist", {
         icon: icons.olist || '<i class="fa fa-list-ol"></i>',
@@ -503,7 +509,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         },
         result: (rte: RichTextEditor) => rte.exec("insertOrderedList"),
       });
-      
+
       rte.add("ulist", {
         icon: icons.ulist || '<i class="fa fa-list-ul"></i>',
         attributes: {
@@ -512,7 +518,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         result: (rte: RichTextEditor) => rte.exec("insertUnorderedList"),
       });
     }
-    
+
     if (options.align) {
       rte.add("justifyLeft", {
         icon: icons.justifyLeft || '<i class="fa fa-align-left"></i>',
@@ -521,7 +527,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         },
         result: (rte: RichTextEditor) => rte.exec("justifyLeft"),
       });
-      
+
       rte.add("justifyCenter", {
         icon: icons.justifyCenter || '<i class="fa fa-align-center"></i>',
         attributes: {
@@ -529,7 +535,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         },
         result: (rte: RichTextEditor) => rte.exec("justifyCenter"),
       });
-      
+
       rte.add("justifyFull", {
         icon: icons.justifyFull || '<i class="fa fa-align-justify"></i>',
         attributes: {
@@ -537,7 +543,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         },
         result: (rte: RichTextEditor) => rte.exec("justifyFull"),
       });
-      
+
       rte.add("justifyRight", {
         icon: icons.justifyRight || '<i class="fa fa-align-right"></i>',
         attributes: {
@@ -546,7 +552,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         result: (rte: RichTextEditor) => rte.exec("justifyRight"),
       });
     }
-    
+
     if (options.actions?.copy) {
       rte.add("copy", {
         icon: icons.copy || '<i class="fa fa-files-o"></i>',
@@ -556,7 +562,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         result: (rte: RichTextEditor) => rte.exec("copy"),
       });
     }
-    
+
     if (options.actions?.cut) {
       rte.add("cut", {
         icon: icons.cut || '<i class="fa fa-scissors"></i>',
@@ -566,7 +572,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         result: (rte: RichTextEditor) => rte.exec("cut"),
       });
     }
-    
+
     if (options.actions?.paste) {
       rte.add("paste", {
         icon: icons.paste || '<i class="fa fa-clipboard"></i>',
@@ -576,7 +582,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         result: (rte: RichTextEditor) => rte.exec("paste"),
       });
     }
-    
+
     if (options.actions?.delete) {
       rte.add("delete", {
         icon: icons.delete || '<i class="fa fa-trash-o"></i>',
@@ -586,7 +592,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         result: (rte: RichTextEditor) => rte.exec("delete"),
       });
     }
-    
+
     if (options.extra) {
       rte.add("code", {
         icon: icons.code || '<i class="fa fa-code"></i>',
@@ -595,7 +601,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         },
         result: (rte: RichTextEditor) => rte.exec(formatBlock, "<pre>"),
       });
-      
+
       rte.add("line", {
         icon: icons.line || "<b>&#8213;</b>",
         attributes: {
@@ -604,7 +610,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         result: (rte: RichTextEditor) => rte.exec("insertHorizontalRule"),
       });
     }
-    
+
     if (options.undoredo) {
       rte.add("undo", {
         icon: icons.undo || '<i class="fa fa-reply"></i>',
@@ -613,7 +619,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         },
         result: (rte: RichTextEditor) => rte.exec("undo"),
       });
-      
+
       rte.add("redo", {
         icon: icons.redo || '<i class="fa fa-share"></i>',
         attributes: {

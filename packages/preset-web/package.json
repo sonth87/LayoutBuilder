@@ -22,7 +22,7 @@
     "start": "grapesjs-cli serve",
     "build": "npm run build:js && npm run build:css && npm run copy",
     "build:js": "rollup -c",
-    "build:css": "sass --no-source-map --style=compressed src/style/main.scss:dist/preset-web.css",
+    "build:css": "sass --no-source-map --style compressed src/style/main.scss:dist/preset-web.css",
     "build:css:dev": "sass --source-map --style=expanded src/style/main.scss:dist/preset-web.css",
     "copy": "mkdir -p build/dist && cp -r dist/* build/dist/",
     "watch": "npm run watch:js & npm run watch:css",

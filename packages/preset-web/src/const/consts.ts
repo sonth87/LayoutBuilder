@@ -1,9 +1,11 @@
-import PluginOptions from "./pluginOptions";
-import { ostTrans } from "./ostTranslations";
+import PluginOptions from "../types/pluginOptions";
+import { ostTrans } from "../const/ostTranslations";
 
 export const cmdDeviceDesktop = "set-device-desktop";
 export const cmdDeviceTablet = "set-device-tablet";
 export const cmdDeviceMobile = "set-device-mobile";
+
+export const wrapperClass = "gjs-editable-wrapper";
 
 export const nameTrait = {
   name: "name",

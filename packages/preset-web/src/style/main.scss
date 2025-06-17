@@ -1,4 +1,5 @@
 @use "gjs_variables" as gjs_vars;
+@use "./variable.scss";
 @use "./codemirror.scss";
 
 .#{gjs_vars.$app-prefix}one-bg {

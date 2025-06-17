@@ -1,6 +1,5 @@
-import type { Editor } from "grapesjs";
 import juice from "juice";
-import PluginOptions from "./pluginOptions";
+import PluginOptions, { Editor } from "./types/pluginOptions";
 
 // Add this interface to define the structure of your code editors
 interface CodeViewer {

@@ -1,4 +1,4 @@
-import type { OstTranslations } from "./pluginOptions";
+import type { OstTranslations } from "../types/pluginOptions";
 
 export const ostTrans: OstTranslations = {
   cmdBtnDesktopLabel: "Desktop",
@@ -26,10 +26,9 @@ export const ostTrans: OstTranslations = {
   modalBtnImport: "Import",
   importPlaceholder: "",
 
-  categoryLabel: "Basic",
-  smSitesCategoryLabel: "Social media sites",
-  smSharesCategoryLabel: "Social media shares",
-  sharesCategoryLabel: "Shares",
+  blockCategoryBasic: "Basic",
+  blockCategoryLayout: "Layout",
+  blockCategoryVariable: "Variable",
 
   applyQrCodeBlkLabel: "Apply link QR code",
   viewQrCodeBlkLabel: "View link QR code",
@@ -54,6 +53,7 @@ export const ostTrans: OstTranslations = {
   linkBlkLabel: "Link",
   linkBlockBlkLabel: "Link Block",
   inputRangeBlkLabel: "Range Input",
+  variableBlkLabel: "Variable",
 
   facebookBlkLabelSite: "Facebook link",
   instagramBlkLabelSite: "Instagram link",

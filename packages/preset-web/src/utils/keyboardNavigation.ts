@@ -1,10 +1,8 @@
-import { Editor } from "grapesjs";
-import type PluginOptions from "../pluginOptions";
+import type PluginOptions from "../types/pluginOptions";
+import { Editor } from "../types/pluginOptions";
 
 export default (editor: Editor, opts: Required<PluginOptions>) => {
   const moveStep = opts.keyboardMoveStep || 5; // Default 5px movement step
-  // Track accumulated transforms for each component
-  const componentTransforms = new Map();
 
   // Register a command to move selected components
   editor.Commands.add("move-component", {
@@ -13,114 +11,164 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
       const selectedComponent = editor.getSelected();
 
       if (!selectedComponent) return;
-      const componentId = selectedComponent.getId();
 
-      // Get current position
+      // Get current style
       const style = selectedComponent.getStyle();
-      let { top, left, right, bottom, position } = style;
+      const { position } = style;
 
-      // If position is not set or is static, we need to make it relative
-      if (!position || position === "static") {
-        selectedComponent.setStyle({ position: "relative" });
-        position = "relative";
+      // Chỉ áp dụng cho component có position absolute
+      if (position !== "absolute") {
+        return;
       }
 
       // Convert position values to numbers
       const parseValue = (value: any) => {
-        if (!value) return 0;
-        return parseInt(value) || 0;
+        if (!value || value === "auto") return null;
+        const parsed = parseInt(value);
+        return isNaN(parsed) ? null : parsed;
       };
 
-      const topVal = parseValue(top);
-      const leftVal = parseValue(left);
+      const topVal = parseValue(style.top);
+      const leftVal = parseValue(style.left);
+      const bottomVal = parseValue(style.bottom);
+      const rightVal = parseValue(style.right);
 
-      // Initialize transform tracking for this component if not exists
-      if (!componentTransforms.has(componentId)) {
-        componentTransforms.set(componentId, { x: 0, y: 0 });
-      }
+      // Determine which properties to use based on priority rules
+      const getVerticalProperty = () => {
+        // Ưu tiên property đã có giá trị, nếu không có thì ưu tiên top
+        if (topVal !== null) return "top";
+        if (bottomVal !== null) return "bottom";
+        return "top"; // Default to top
+      };
 
-      const currentTransform = componentTransforms.get(componentId);
+      const getHorizontalProperty = () => {
+        // Ưu tiên property đã có giá trị, nếu không có thì ưu tiên left
+        if (leftVal !== null) return "left";
+        if (rightVal !== null) return "right";
+        return "left"; // Default to left
+      };
 
       // Update position based on direction
+      const newStyle: any = {};
+
+      // Đảm bảo position vẫn là absolute
+      newStyle.position = "absolute";
+
       switch (direction) {
         case "up":
-          if (position === "absolute" || position === "fixed") {
-            selectedComponent.setStyle({ top: `${topVal - amount}px` });
+          const verticalPropUp = getVerticalProperty();
+          if (verticalPropUp === "top") {
+            const currentTop = topVal !== null ? topVal : 0;
+            newStyle.top = `${currentTop - amount}px`;
+            // Clear bottom if we're using top và có bottom value
+            if (bottomVal !== null) {
+              newStyle.bottom = "auto";
+            }
           } else {
-            // Update accumulated Y transform
-            currentTransform.y -= amount;
-            selectedComponent.setStyle({
-              transform: `translate(${currentTransform.x}px, ${currentTransform.y}px)`,
-            });
+            const currentBottom = bottomVal !== null ? bottomVal : 0;
+            const newBottom = currentBottom + amount;
+            newStyle.bottom = `${newBottom}px`;
+            if (topVal !== null) {
+              newStyle.top = "auto";
+            }
           }
           break;
+
         case "down":
-          if (position === "absolute" || position === "fixed") {
-            selectedComponent.setStyle({ top: `${topVal + amount}px` });
+          const verticalPropDown = getVerticalProperty();
+          if (verticalPropDown === "top") {
+            const currentTop = topVal !== null ? topVal : 0;
+            const newTop = currentTop + amount;
+            newStyle.top = `${newTop}px`;
+            // Clear bottom if we're using top và có bottom value
+            if (bottomVal !== null) {
+              newStyle.bottom = "auto";
+            }
           } else {
-            // Update accumulated Y transform
-            currentTransform.y += amount;
-            selectedComponent.setStyle({
-              transform: `translate(${currentTransform.x}px, ${currentTransform.y}px)`,
-            });
+            const currentBottom = bottomVal !== null ? bottomVal : 0;
+            const newBottom = currentBottom - amount;
+            newStyle.bottom = `${newBottom}px`;
+            // Clear top if we're using bottom và có top value
+            if (topVal !== null) {
+              newStyle.top = "auto";
+            }
           }
           break;
+
         case "left":
-          if (position === "absolute" || position === "fixed") {
-            selectedComponent.setStyle({ left: `${leftVal - amount}px` });
+          const horizontalPropLeft = getHorizontalProperty();
+          if (horizontalPropLeft === "left") {
+            const currentLeft = leftVal !== null ? leftVal : 0;
+            const newLeft = currentLeft - amount;
+            newStyle.left = `${newLeft}px`;
+            // Clear right if we're using left và có right value
+            if (rightVal !== null) {
+              newStyle.right = "auto";
+            }
           } else {
-            // Update accumulated X transform
-            currentTransform.x -= amount;
-            selectedComponent.setStyle({
-              transform: `translate(${currentTransform.x}px, ${currentTransform.y}px)`,
-            });
+            const currentRight = rightVal !== null ? rightVal : 0;
+            const newRight = currentRight + amount;
+            newStyle.right = `${newRight}px`;
+            // Clear left if we're using right và có left value
+            if (leftVal !== null) {
+              newStyle.left = "auto";
+            }
           }
           break;
+
         case "right":
-          if (position === "absolute" || position === "fixed") {
-            selectedComponent.setStyle({ left: `${leftVal + amount}px` });
+          const horizontalPropRight = getHorizontalProperty();
+          if (horizontalPropRight === "left") {
+            const currentLeft = leftVal !== null ? leftVal : 0;
+            const newLeft = currentLeft + amount;
+            newStyle.left = `${newLeft}px`;
+            // Clear right if we're using left và có right value
+            if (rightVal !== null) {
+              newStyle.right = "auto";
+            }
           } else {
-            // Update accumulated X transform
-            currentTransform.x += amount;
-            selectedComponent.setStyle({
-              transform: `translate(${currentTransform.x}px, ${currentTransform.y}px)`,
-            });
+            const currentRight = rightVal !== null ? rightVal : 0;
+            const newRight = currentRight - amount;
+            newStyle.right = `${newRight}px`;
+            // Clear left if we're using right và có left value
+            if (leftVal !== null) {
+              newStyle.left = "auto";
+            }
           }
           break;
       }
+
+      // Apply the new styles - chỉ update những property thay đổi
+      selectedComponent.addStyle(newStyle);
 
       // Trigger change event to update UI
       editor.trigger("component:update", selectedComponent);
-      
-      // Force editor to save state for undo/redo
-      editor.UndoManager.add({ 
-        component: selectedComponent,
-        style: { 
-          ...selectedComponent.getStyle()
-        }
-      });
 
       return selectedComponent;
     },
   });
 
-  // Clear transform tracking when component is deselected
-  editor.on("component:deselected", (component) => {
-    if (component && component.getId) {
-      componentTransforms.delete(component.getId());
-    }
-  });
+  // Biến để track xem event listener đã được gắn chưa
+  let listenersAttached = false;
 
-  // Add keyboard event listener specifically to canvas frame
+  // Add keyboard event listener
   const handleKeyDown = (e: KeyboardEvent) => {
-    // Only proceed if we have a selected component and Alt key is pressed
+    // Chỉ xử lý khi có component được chọn
     const selectedComponent = editor.getSelected();
-    if (!selectedComponent || !e.altKey) return;
-    
+    if (!selectedComponent) return;
+
+    // Kiểm tra xem component có position absolute không
+    const style = selectedComponent.getStyle();
+
+    // Chỉ xử lý nếu component ĐÃ có position absolute
+    if (style.position !== "absolute") {
+      return;
+    }
+
     // Check if this is an arrow key
     const isArrowKey = [37, 38, 39, 40].includes(e.keyCode);
     if (!isArrowKey) return;
-    
+
     // Stop propagation to prevent other handlers from catching this event
     e.stopPropagation();
     e.preventDefault();
@@ -143,7 +191,8 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         return;
     }
 
-    // Adjust move amount if shift key is also pressed
+    // Di chuyển nhanh hơn khi nhấn Shift
+    // Nếu Shift được nhấn, tăng gấp 5 lần bước di chuyển
     const amount = e.shiftKey ? moveStep * 5 : moveStep;
 
     // Run the move command
@@ -151,74 +200,30 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
   };
 
   // Attach event listener specifically to the canvas
-  const attachCanvasListeners = () => {
-    // Get the canvas element
-    const canvasEl = editor.Canvas.getElement();
-    const canvasDoc = editor.Canvas.getDocument();
-    const canvasWin = editor.Canvas.getWindow();
-    
-    if (canvasEl) {
-      canvasEl.addEventListener("keydown", handleKeyDown);
+  const attachListeners = () => {
+    if (listenersAttached) {
+      return;
     }
-    
-    if (canvasDoc) {
-      canvasDoc.addEventListener("keydown", handleKeyDown);
-    }
-    
-    if (canvasWin) {
-      canvasWin.addEventListener("keydown", handleKeyDown);
-    }
-    
-    // Also attach to main document as a fallback, but with focus check
-    document.addEventListener("keydown", (e) => {
-      // Only handle if focus is in the editor area
-      const activeEl = document.activeElement;
-      const editorEl = editor.getContainer();
-      
-      if (editorEl && (editorEl.contains(activeEl) || activeEl === editorEl)) {
-        handleKeyDown(e);
-      }
-    });
+
+    document.addEventListener("keydown", handleKeyDown);
+    listenersAttached = true;
   };
 
   // Remove event listeners
-  const detachCanvasListeners = () => {
-    const canvasEl = editor.Canvas.getElement();
-    const canvasDoc = editor.Canvas.getDocument();
-    const canvasWin = editor.Canvas.getWindow();
-    
-    if (canvasEl) {
-      canvasEl.removeEventListener("keydown", handleKeyDown);
-    }
-    
-    if (canvasDoc) {
-      canvasDoc.removeEventListener("keydown", handleKeyDown);
-    }
-    
-    if (canvasWin) {
-      canvasWin.removeEventListener("keydown", handleKeyDown);
-    }
-    
+  const detachListeners = () => {
+    if (!listenersAttached) return;
+
     document.removeEventListener("keydown", handleKeyDown);
+    listenersAttached = false;
   };
 
   // Add event listeners when editor is loaded
   editor.on("load", () => {
-    // Short timeout to ensure canvas is fully initialized
     setTimeout(() => {
-      attachCanvasListeners();
+      attachListeners();
     }, 100);
   });
 
   // Clean up event listeners when editor is closed
-  editor.on("destroy", detachCanvasListeners);
-  
-  // Re-attach listeners when canvas is refreshed
-  editor.on("canvas:refresh", () => {
-    detachCanvasListeners();
-    // Short timeout to ensure canvas is fully refreshed
-    setTimeout(() => {
-      attachCanvasListeners();
-    }, 100);
-  });
+  editor.on("destroy", detachListeners);
 };

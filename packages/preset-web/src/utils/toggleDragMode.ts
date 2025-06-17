@@ -1,5 +1,4 @@
-import { Editor } from "grapesjs";
-import PluginOptions from "../pluginOptions";
+import PluginOptions, { Editor } from "../types/pluginOptions";
 
 export const toggleDragMode = (
   editor: Editor,

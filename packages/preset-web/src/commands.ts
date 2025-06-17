@@ -1,13 +1,11 @@
-import type { Editor } from "grapesjs";
-import PluginOptions from "./pluginOptions";
-import { cmdDeviceDesktop, cmdDeviceMobile, cmdDeviceTablet } from "./consts";
+import PluginOptions, { Editor } from "./types/pluginOptions";
+import {
+  cmdDeviceDesktop,
+  cmdDeviceMobile,
+  cmdDeviceTablet,
+} from "./const/consts";
 import openExportCommand from "./openExportCommand";
 import openImportCommand from "./openImportCommand";
-import openExportJson from "./openExportJson";
-import {
-  extractDataFields,
-  removeStyleProperties,
-} from "./utils/jsonProcessors";
 import { toggleDragMode } from "./utils/toggleDragMode";
 
 export default async (editor: Editor, opts: Required<PluginOptions>) => {
@@ -15,7 +13,6 @@ export default async (editor: Editor, opts: Required<PluginOptions>) => {
 
   openImportCommand(editor, opts);
   openExportCommand(editor, opts);
-  openExportJson(editor, opts);
 
   Commands.add(cmdDeviceDesktop, {
     run: (ed) => ed.setDevice("Desktop"),
@@ -47,19 +44,5 @@ export default async (editor: Editor, opts: Required<PluginOptions>) => {
   Commands.add("toggle-drag-mode", {
     run: (editor) => toggleDragMode(editor, opts),
     stop: () => {},
-  });
-
-  Commands.add("extract-data-fields", {
-    async run() {
-      const dataFields = await extractDataFields(editor);
-      return dataFields;
-    },
-  });
-
-  Commands.add("clean-json", {
-    run() {
-      const cleanedJson = removeStyleProperties(editor);
-      return cleanedJson;
-    },
   });
 };

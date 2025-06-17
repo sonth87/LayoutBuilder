@@ -1,4 +1,4 @@
-import type { Editor } from "grapesjs";
+import { Editor } from "../types/pluginOptions";
 
 /**
  * Hàm trích xuất tất cả các trường dữ liệu có dạng {{field_name}} từ JSON của GrapesJS
@@ -18,72 +18,75 @@ export const extractDataFields = async (
   const fields: Record<string, string> = {};
   const brackets = customBrackets;
 
-  // Object để theo dõi các giá trị duy nhất (sẽ được chuyển thành values)
+  // Object để theo dõi các giá trị duy nhất
   const uniqueFieldValues = new Set<string>();
 
   // Tạo regex động dựa trên brackets
-  const openBracket = brackets[0].replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // Escape các ký tự đặc biệt
+  const openBracket = brackets[0].replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const closeBracket = brackets[1].replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const pattern = `${openBracket}\\s*([^${closeBracket}]+?)\\s*${closeBracket}`;
   const regex = new RegExp(pattern, "g");
 
-  // Hàm đệ quy để duyệt qua toàn bộ cây JSON
-  const traverse = async (obj: any, parentId?: string) => {
-    // Xử lý bất đồng bộ để không block main thread
-    return new Promise<void>((resolve) => {
-      setTimeout(() => {
-        if (!obj || typeof obj !== "object") {
-          resolve();
-          return;
+  // Hàm đệ quy để duyệt qua components
+  const traverseComponents = (components: any[], parentId?: string): void => {
+    if (!Array.isArray(components)) return;
+
+    components.forEach((component) => {
+      const currentId = component.attributes?.id || parentId;
+
+      // Kiểm tra content của textnode
+      if (component.type === "textnode" && component.content) {
+        regex.lastIndex = 0;
+        let match;
+
+        while ((match = regex.exec(component.content)) !== null) {
+          const fieldValue = match[1].trim();
+
+          if (currentId && fieldValue) {
+            fields[currentId] = fieldValue;
+            uniqueFieldValues.add(fieldValue);
+          }
         }
+      }
 
-        const promises: Promise<void>[] = [];
+      // Kiểm tra attributes với data-ost-type hoặc other attributes
+      if (component.attributes) {
+        Object.entries(component.attributes).forEach(([key, value]) => {
+          if (typeof value === "string") {
+            regex.lastIndex = 0;
+            let match;
 
-        // Xử lý nội dung text
-        if (obj.content && typeof obj.content === "string") {
-          // Reset lastIndex để đảm bảo regex bắt đầu từ đầu chuỗi
-          regex.lastIndex = 0;
-          let match;
+            while ((match = regex.exec(value)) !== null) {
+              const fieldValue = match[1].trim();
 
-          // Tìm tất cả các pattern trong chuỗi
-          while ((match = regex.exec(obj.content)) !== null) {
-            const fieldValue = match[1].trim();
-            const elementId = obj.attributes?.id || parentId;
-
-            if (elementId && fieldValue) {
-              fields[elementId] = fieldValue;
-
-              // Thêm fieldValue vào tập hợp các giá trị duy nhất
-              uniqueFieldValues.add(fieldValue);
+              if (currentId && fieldValue) {
+                fields[currentId] = fieldValue;
+                uniqueFieldValues.add(fieldValue);
+              }
             }
           }
-        }
-
-        // Nếu có attributes.id, lưu lại để sử dụng cho các phần tử con
-        const currentId = obj.attributes?.id || parentId;
-
-        // Duyệt qua các components con
-        if (Array.isArray(obj.components)) {
-          obj.components.forEach((comp: any) => {
-            promises.push(traverse(comp, currentId));
-          });
-        }
-
-        // Duyệt qua các thuộc tính khác trong object
-        Object.keys(obj).forEach((key) => {
-          if (typeof obj[key] === "object" && obj[key] !== null) {
-            promises.push(traverse(obj[key], currentId));
-          }
         });
+      }
 
-        // Chờ tất cả các promise hoàn thành
-        Promise.all(promises).then(() => resolve());
-      }, 0);
+      // Duyệt components con
+      if (component.components) {
+        traverseComponents(component.components, currentId);
+      }
     });
   };
 
-  // Bắt đầu duyệt từ root
-  await traverse(json);
+  // Duyệt qua tất cả pages và frames
+  if (json.pages && Array.isArray(json.pages)) {
+    json.pages.forEach((page: any) => {
+      if (page.frames && Array.isArray(page.frames)) {
+        page.frames.forEach((frame: any) => {
+          if (frame.component && frame.component.components) {
+            traverseComponents(frame.component.components);
+          }
+        });
+      }
+    });
+  }
 
   // Tạo đối tượng values với giá trị rỗng cho mỗi field duy nhất
   const values: Record<string, string> = {};
@@ -113,28 +116,39 @@ export const removeStyleProperties = (editor: Editor) => {
     "droppable",
     "draggable",
     "resizable",
+    "void",
+    "classes", // Loại bỏ classes
   ];
 
   // Hàm đệ quy để xử lý loại bỏ các thuộc tính không cần thiết
   const cleanObject = (obj: any): any => {
-    // Nếu không phải object hoặc là null, trả về nguyên giá trị
     if (!obj || typeof obj !== "object") return obj;
 
-    // Nếu là array, xử lý từng phần tử
     if (Array.isArray(obj)) {
       return obj.map((item) => cleanObject(item));
     }
 
-    // Tạo object mới để lưu kết quả
     const cleaned: any = {};
 
-    // Duyệt qua các thuộc tính
     Object.keys(obj).forEach((key) => {
       // Bỏ qua các thuộc tính cần loại bỏ
       if (propsToRemove.includes(key)) return;
 
+      // Xử lý đặc biệt cho attributes - loại bỏ style attribute
+      if (key === "attributes" && typeof obj[key] === "object") {
+        const cleanedAttrs: any = {};
+        Object.keys(obj[key]).forEach((attrKey) => {
+          if (attrKey !== "style") {
+            // Loại bỏ style attribute
+            cleanedAttrs[attrKey] = obj[key][attrKey];
+          }
+        });
+        if (Object.keys(cleanedAttrs).length > 0) {
+          cleaned[key] = cleanedAttrs;
+        }
+      }
       // Xử lý đệ quy các thuộc tính là object
-      if (typeof obj[key] === "object" && obj[key] !== null) {
+      else if (typeof obj[key] === "object" && obj[key] !== null) {
         cleaned[key] = cleanObject(obj[key]);
       }
       // Giữ nguyên các thuộc tính khác
@@ -146,27 +160,45 @@ export const removeStyleProperties = (editor: Editor) => {
     return cleaned;
   };
 
-  // Xử lý từng phần chính của JSON
+  // Xử lý JSON chính
   const cleanedJson: any = {};
 
-  // Loại bỏ hoàn toàn phần styles
+  // Giữ lại assets
   if (json.assets) {
-    cleanedJson.assets = cleanObject(json.assets);
+    cleanedJson.assets = json.assets;
   }
 
-  // Loại bỏ hoàn toàn phần styles
-  if (json.dataSources) {
-    cleanedJson.dataSources = cleanObject(json.dataSources);
-  }
+  // Bỏ qua styles hoàn toàn - không thêm vào kết quả
 
   // Xử lý các pages
-  if (json.pages) {
-    cleanedJson.pages = cleanObject(json.pages);
+  if (json.pages && Array.isArray(json.pages)) {
+    cleanedJson.pages = json.pages.map((page: any) => {
+      const cleanedPage: any = { id: page.id };
+
+      if (page.frames && Array.isArray(page.frames)) {
+        cleanedPage.frames = page.frames.map((frame: any) => {
+          const cleanedFrame: any = { id: frame.id };
+
+          if (frame.component) {
+            cleanedFrame.component = cleanObject(frame.component);
+          }
+
+          return cleanedFrame;
+        });
+      }
+
+      return cleanedPage;
+    });
   }
 
   // Xử lý symbols nếu có
-  if (json.symbols) {
+  if (json.symbols && Array.isArray(json.symbols)) {
     cleanedJson.symbols = cleanObject(json.symbols);
+  }
+
+  // Xử lý dataSources nếu có
+  if (json.dataSources) {
+    cleanedJson.dataSources = json.dataSources;
   }
 
   return cleanedJson;

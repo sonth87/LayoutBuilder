@@ -23,7 +23,7 @@
       referrerpolicy="no-referrer"
     />
     <script src="https://unpkg.com/grapesjs@0.22.7/dist/grapes.min.js"></script>
-    <script src="./dist/preset-web.min.js"></script>
+    <script src="./dist/index.js"></script>
   </head>
   <style>
     body,
@@ -456,7 +456,7 @@
           padding: 5px;
           width: 100%;
           height: 100%;
-          background-color: rgb(234, 236, 237);
+          /* background-color: rgb(234, 236, 237); */
         }
         .c926 {
           color: rgb(158, 83, 129);
@@ -709,7 +709,7 @@
     <script type="text/javascript">
       // Set up GrapesJS editor with the plugin
       window.onload = () => {
-        grapesjs.init({
+        const editor = grapesjs.init({
           height: "100%",
           storageManager: false,
           telemetry: false,
@@ -730,17 +730,58 @@
             styles: [
               "https://use.fontawesome.com/releases/v6.7.2/css/all.css",
               "./style/canvasStyle.css",
+              "./dist/preset-web.css",
             ],
           },
           canvasCss: `.gjs-selected{
                       outline: 2px solid #3b5998 !important;
                       outline-offset: -2px !important;
                     }`,
-          blockManager: { appendOnClick: false },
+          blockManager: { appendOnClick: true },
           plugins: ["preset-web"],
           pluginsOpts: {
-            "preset-web": {},
+            "preset-web": {
+              contextMenu: {
+                customItems: [
+                  {
+                    label: "Copy HTML",
+                    description: "Copy component HTML to clipboard",
+                    icon: '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
+                    action: (component, editor) => {
+                      const html = component.toHTML();
+                      navigator.clipboard.writeText(html);
+                      alert("HTML copied to clipboard!!!!!!");
+                    },
+                  },
+                ],
+              },
+            },
           },
+        });
+
+        editor.on("load", async () => {
+          try {
+            const result = await editor.extractVariables();
+            const jsonData = await editor.extractJsonData();
+            console.log("Data fields:", result, jsonData);
+
+            editor.BlockManager.add("text-block", {
+              label: "Text Block 123",
+              content: {
+                type: "text",
+                content: "This is a text block",
+                style: { color: "#ff0000" },
+              },
+            });
+
+            editor.setCanvasBackground({
+              image: "./image.png",
+              size: "contain",
+              repeat: "repeat",
+            });
+          } catch (error) {
+            console.error("Error extracting data fields:", error);
+          }
         });
       };
     </script>

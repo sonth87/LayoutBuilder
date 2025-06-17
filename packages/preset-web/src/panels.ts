@@ -1,10 +1,13 @@
-import type { Editor } from "grapesjs";
-import PluginOptions from "./pluginOptions";
-import { cmdDeviceDesktop, cmdDeviceMobile, cmdDeviceTablet } from "./consts";
+import PluginOptions, { Editor } from "./types/pluginOptions";
+import {
+  cmdDeviceDesktop,
+  cmdDeviceMobile,
+  cmdDeviceTablet,
+} from "./const/consts";
 
-export default (editor: Editor, opts: Required<PluginOptions>) => {
+export default async (editor: Editor, opts: Required<PluginOptions>) => {
   const { Panels } = editor;
-  const { cmdOpenImport, cmdOpenExport, cmdOpenExportJson } = opts;
+  const { cmdOpenImport, cmdOpenExport } = opts;
   const openStyleManager = "open-sm";
   const openTraits = "open-tm";
   const openLayers = "open-layers";
@@ -88,46 +91,6 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
           </svg>`,
         },
         {
-          id: cmdOpenExportJson,
-          command: cmdOpenExportJson,
-          attributes: {
-            "data-tooltip": opts.t9n.cmdBtnExportJsonLabel,
-            "data-tooltip-pos": "bottom",
-          },
-          label: `<svg ${iconStyle} viewBox="0 0 24 24">
-              <path fill="currentColor" d="M12.89,3L14.85,3.4L11.11,21L9.15,20.6L12.89,3M19.59,12L16,8.41V5.58L22.42,12L16,18.41V15.58L19.59,12M1.58,12L8,5.58V8.41L4.41,12L8,15.58V18.41L1.58,12Z" />
-          </svg>`,
-        },
-        {
-          id: cmdOpenImport,
-          command: cmdOpenImport,
-          attributes: {
-            "data-tooltip": opts.t9n.cmdBtnImportLabel,
-            "data-tooltip-pos": "bottom",
-          },
-          label: `<svg ${iconStyle} viewBox="0 0 24 24">
-              <path fill="currentColor" d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
-          </svg>`,
-        },
-        {
-          id: "extract-data-fields",
-          command: "extract-data-fields",
-          attributes: {
-            "data-tooltip": opts.t9n.cmdBtnExportJsonLabel,
-            "data-tooltip-pos": "bottom",
-          },
-          label: `json`,
-        },
-        {
-          id: "clean-json",
-          command: "clean-json",
-          attributes: {
-            "data-tooltip": "clear JSON",
-            "data-tooltip-pos": "bottom",
-          },
-          label: `xjson`,
-        },
-        {
           id: "toggle-drag-mode",
           command: "toggle-drag-mode",
           context: "toggle-drag-mode",
@@ -140,7 +103,7 @@ export default (editor: Editor, opts: Required<PluginOptions>) => {
         {
           id: "split-functions",
           // className: "fa-solid fa-rotate-right",
-          label: "|"
+          label: "|",
         },
         {
           id: "undo",

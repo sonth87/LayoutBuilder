@@ -1,4 +1,7 @@
+import { Editor as GjsEditor } from "grapesjs";
 import juice from "juice";
+import { BackgroundType } from "./background";
+import { ContextMenuConfig } from './contextMenu';
 
 export default interface PluginOptions {
   /**
@@ -18,7 +21,6 @@ export default interface PluginOptions {
    * @default 'gjs-open-export-template'
    */
   cmdOpenExport?: string;
-  cmdOpenExportJson?: string;
 
   /**
    * Import command id.
@@ -94,8 +96,20 @@ export default interface PluginOptions {
   }[];
 
   keyboardMoveStep?: number;
+
+  brackets?: [string, string];
+
+  contextMenu?: ContextMenuConfig;
 }
 
 export type OstTranslations = {
   [key: string]: string;
 };
+
+export interface Editor extends GjsEditor {
+  extractVariables?: () => Promise<any>;
+  extractJsonData?: () => Promise<any>;
+  setCanvasBackground?: (background: BackgroundType) => boolean;
+  getCanvasBackground?: () => BackgroundType | null;
+  resetCanvasBackground?: () => boolean;
+}
